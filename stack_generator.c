@@ -1,31 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   stack_generator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/11/28 11:44:04 by asdiallo         ###   ########.fr       */
+/*   Created: 2024/11/28 11:37:23 by asdiallo          #+#    #+#             */
+/*   Updated: 2024/11/28 12:05:58 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+# include "push_swap.h"
 
-# ifndef MAX
-#  define MAX 100
-# endif
+int is_abs(int value)
+{
+    if (value < 0)
+        return (-value);
+    else
+        return (value);
+}
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h> // a enlever
+int lcg(int *seed)
+{
+    int a = 1103515245;
+    int c = 12345;
+    int m = 32768;
 
+    *seed = (a * (*seed) + c) % m;
 
-typedef struct s_stack{
-	int *data;
-	int top;
-	int capacity[MAX];
-}	t_stack;
+    return (is_abs(*seed % 501));
+}
 
-#endif
+int main ()
+{
+    int *seed;
+    int i;
+    i = 0;
+    while (i < 100) {
+        printf("%d\n", lcg(seed));
+        i++;
+    }
+}

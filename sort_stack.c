@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:18:20 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/11/20 22:23:45 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/11/27 23:26:11 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ int peek(t_stack *stack)
 	return (stack -> data[stack -> top]);
 }
 
-int is_empty(t_stack *stack)
+int isEmpty(t_stack* stack)
 {
-	return (stack -> top == -1);
+	return (stack->top == -1);
+}
+
+int is_full(t_stack* stack)
+{
+	return (stack->top == MAX - 1);
 }
