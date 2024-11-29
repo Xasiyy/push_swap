@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/11/28 11:44:04 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:39:57 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 typedef struct s_stack{
 	int *data;
 	int top;
-	int capacity[MAX];
+	int capacity;
 }	t_stack;
 
 #endif

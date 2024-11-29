@@ -6,11 +6,21 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:18:20 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/11/27 23:26:11 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:18:37 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int initStack(t_stack *stack, int capacity)
+{
+	stack->data = (int *)malloc(capacity * sizeof(int));
+	if (!stack->data)
+		return (0);
+	stack->top = -1;
+	stack->capacity = capacity;
+	return (1);
+}
 
 int pop(t_stack *stack)
 {
