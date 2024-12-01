@@ -1,43 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_generator.c                                  :+:      :+:    :+:   */
+/*   src.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 11:37:23 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/11/28 16:13:13 by asdiallo         ###   ########.fr       */
+/*   Created: 2024/12/01 21:49:42 by asdiallo          #+#    #+#             */
+/*   Updated: 2024/12/01 21:51:55 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "push_swap.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-int is_abs(int value)
-{
-	if (value < 0)
-		return (-value);
-	else
-		return (value);
-}
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
 
-int lcg(int *seed)
-{
-	int a = 1103515245;
-	int c = 12345;
-	int m = 32768;
+int	ft_atoi(const char *str);
 
-	*seed = (a * (*seed) + c) % m;
-
-	return (is_abs(*seed % 501));
-}
-
-int main ()
-{
-	int *seed;
-	int i;
-	i = 0;
-	while (i < 10) {
-		printf("%d\n", lcg(seed));
-		i++;
-	}
-}
+#endif

@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   program.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/01 22:05:17 by asdiallo         ###   ########.fr       */
+/*   Created: 2024/12/01 21:29:55 by asdiallo          #+#    #+#             */
+/*   Updated: 2024/12/01 22:04:36 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+# include "push_swap.h"
+# include "src/libft.h"
 
-# ifndef MAX
-#  define MAX 100
-# endif
-
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h> // a enlever
-
-
-typedef struct s_stack{
-	int *data;
-	int top;
-	int capacity;
-}	t_stack;
-
-t_stack *init_stack(int capacity);
-//t_stack *push_swap(t_stack *stack);
-void	push(t_stack *stack, int value);
-
-#endif
+int	main(int argc, char **argv)
+{
+	int	i;
+	int	value;
+	t_stack *stack;
+	
+	i = 0;
+	if (argc >= 2)
+	{
+		stack = init_stack(argc - 1);
+		while (i < argc)
+		{
+			value = ft_atoi(argv[i]);
+			push(stack, value);
+			i++;
+		}
+		free(stack);
+		free(stack -> data);
+	}
+	else
+		return (1);
+}
