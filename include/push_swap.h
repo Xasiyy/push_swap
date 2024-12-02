@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/02 11:32:42 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:27:48 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_stack{
 
 t_stack *init_stack(int capacity);
 //t_stack *push_swap(t_stack *stack);
-void	push(t_stack *stack, int value);
+void	add_elem(t_stack *stack, int value);
+void	print_stack(t_stack *stack);
+t_stack *creat_stack(int argc, char **argv);
 
 #endif

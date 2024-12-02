@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:18:20 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/02 11:06:09 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:34:44 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ t_stack *init_stack(int capacity)
 	if (!stack -> data)
 	{
 		free(stack);
-		exit(1);
+		return(NULL);
 	}
 	stack->top = -1;
 	stack->capacity = capacity;
 	return (stack);
 }
 
-void	push(t_stack *stack, int value)
+void	add_elem(t_stack *stack, int value)
 {
-	if (stack -> top == stack -> capacity - 1)
+	if (stack->top == stack->capacity - 1)
 		return ;
-	stack -> data[++stack -> top] = value;
+	stack->data[++stack -> top] = value;
 }
 
 /* int pop(t_stack *stack)
@@ -44,12 +44,12 @@ void	push(t_stack *stack, int value)
 	return (stack -> data[stack -> top--]);
 } */
 
-int peek(t_stack *stack)
+/* int peek(t_stack *stack)
 {
-    if(stack -> top == -1)
+    if(stack->top == -1)
 		return (-1);
 	return (stack -> data[stack -> top]);
-}
+} */
 
 int is_empty(t_stack* stack)
 {

@@ -1,6 +1,6 @@
 NAME = push_swap
 
-SRCS = srcs/push_swap.c  srcs/main.c srcs/sort_stack.c
+SRCS = srcs/push_swap.c srcs/main.c srcs/sort_stack.c srcs/print_stack.c
 
 HEADERS = -I ./include/
 
