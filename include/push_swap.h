@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/01 22:05:17 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:32:42 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #  define MAX 100
 # endif
 
+# include "../libs/Libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h> // a enlever

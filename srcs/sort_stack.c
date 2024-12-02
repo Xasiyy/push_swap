@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:18:20 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/01 22:01:54 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:06:09 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	push(t_stack *stack, int value)
 	stack -> data[++stack -> top] = value;
 }
 
-int pop(t_stack *stack)
+/* int pop(t_stack *stack)
 {
     if(stack -> top == -1)
         return (-1);
 	return (stack -> data[stack -> top--]);
-}
+} */
 
 int peek(t_stack *stack)
 {

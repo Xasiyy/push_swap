@@ -1,25 +1,36 @@
 NAME = push_swap
 
-SRCS = push_swap.c  program.c sort_stack.c src/libft.c
+SRCS = srcs/push_swap.c  srcs/main.c srcs/sort_stack.c
+
+HEADERS = -I ./include/
+
+LIBFT_DIR = libs/Libft
+
+LIBFT_NAME = libft.a
 
 OBJS = $(SRCS:.c=.o)
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g3
 
-all : $(NAME)
+all : $(NAME) $(LIBFT_DIR)/$(LIBFT_NAME)
 
-$(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+$(NAME): $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME)
+	$(CC) $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(NAME)
+
+$(LIBFT_DIR)/$(LIBFT_NAME):
+	@make -C $(LIBFT_DIR)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
+	@make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
