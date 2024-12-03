@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/02 20:49:12 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:33:18 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 typedef struct s_node{
 	int value;
 	struct s_node *next;
+	struct s_node *prev;
 }	t_node;
 
 typedef struct s_stack{
@@ -38,5 +39,6 @@ t_stack *creat_stack(int argc, char **argv);
 void	add_elem(t_stack *stack, int value);
 void	print_stack(t_stack *stack);
 void	free_stack(t_stack *stack);
+int parsing(int argc, char **argv);
 
 #endif

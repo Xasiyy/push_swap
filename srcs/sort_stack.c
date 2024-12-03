@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:18:20 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/02 21:20:57 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:12:41 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,22 @@ t_stack *init_stack()
 void	add_elem(t_stack *stack, int value)
 {
 	t_node *new_node;
+	t_node *current;
 
 	new_node = (t_node *)malloc(sizeof(t_node));
 	if (!new_node)
 		return ;
 	new_node->value = value;
-	new_node->next = stack->top;
-	stack->top = new_node;
+	new_node->next = NULL;
+	if (stack->top == NULL)
+		stack->top = new_node;
+	else 
+	{
+		current = stack->top;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new_node;
+	}
 }
 
 t_stack *creat_stack(int argc, char **argv)
