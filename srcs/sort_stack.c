@@ -3,60 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   sort_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:18:20 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/02 16:34:44 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:20:57 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack *init_stack(int capacity)
+t_stack *init_stack()
 {
 	t_stack *stack;
 	
 	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (!stack)
 		exit (1);
-	stack->data = (int *)malloc(capacity * sizeof(int));
-	if (!stack -> data)
-	{
-		free(stack);
-		return(NULL);
-	}
-	stack->top = -1;
-	stack->capacity = capacity;
+	stack->top = NULL;
 	return (stack);
 }
 
 void	add_elem(t_stack *stack, int value)
 {
-	if (stack->top == stack->capacity - 1)
+	t_node *new_node;
+
+	new_node = (t_node *)malloc(sizeof(t_node));
+	if (!new_node)
 		return ;
-	stack->data[++stack -> top] = value;
+	new_node->value = value;
+	new_node->next = stack->top;
+	stack->top = new_node;
 }
 
-/* int pop(t_stack *stack)
+t_stack *creat_stack(int argc, char **argv)
 {
-    if(stack -> top == -1)
-        return (-1);
-	return (stack -> data[stack -> top--]);
-} */
-
-/* int peek(t_stack *stack)
-{
-    if(stack->top == -1)
-		return (-1);
-	return (stack -> data[stack -> top]);
-} */
-
-int is_empty(t_stack* stack)
-{
-	return (stack->top == -1);
+	t_stack *stack;
+	int		i;
+	int		value;
+	
+	stack = init_stack();
+	if (!stack)
+		return (NULL);
+	i = 1;
+	while (i < argc)
+	{
+		value = ft_atoi(argv[i]);
+		add_elem(stack, value);
+		i++;
+	}
+	print_stack (stack);
+	return (stack);
 }
 
-int is_full(t_stack* stack)
+void	free_stack(t_stack *stack)
 {
-	return (stack->top == MAX - 1);
+	t_node *current;
+	t_node *next_node;
+
+	current = stack->top;
+	while (current)
+	{
+		next_node = current->next;
+		free(current);
+		current = next_node;
+	}
+	free(stack);
 }

@@ -2,27 +2,26 @@ NAME = push_swap
 
 SRCS = srcs/push_swap.c srcs/main.c srcs/sort_stack.c srcs/print_stack.c
 
-HEADERS = -I ./include/
-
+INCLUDES = -I include
 LIBFT_DIR = libs/Libft
-
 LIBFT_NAME = libft.a
+LIBFT = $(LIBFT_DIR)/$(LIBFT_NAME)
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
 
-all : $(NAME) $(LIBFT_DIR)/$(LIBFT_NAME)
+all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME)
-	$(CC) $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-$(LIBFT_DIR)/$(LIBFT_NAME):
+$(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
@@ -33,6 +32,5 @@ fclean: clean
 	@make -C $(LIBFT_DIR) fclean
 
 re: fclean all
-
 
 .PHONY: all clean fclean re
