@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/04 11:09:59 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:58:18 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ t_stack *creat_stack(int argc, char **argv);
 void	add_elem(t_stack *stack, int value);
 void	print_stack(t_stack *stack);
 void	free_stack(t_stack *stack);
-int parsing(int argc, char **argv);
+int		parsing(int argc, char **argv);
+void	push(t_stack *stack);
+void	swap(t_stack *stack);
+void	pa(t_stack *stack_a, t_stack *stack_b);
+void	pb(t_stack *staack_a, t_stack *stack_b);
+void	sa(t_stack *stack_a);
+void	sb(t_stack *stack_b);
+void	ss(t_stack *stack_a, t_stack *stack_b);
 
 #endif
