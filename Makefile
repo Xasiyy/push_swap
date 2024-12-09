@@ -1,6 +1,13 @@
 NAME = push_swap
 
-SRCS = srcs/push_swap.c srcs/main.c srcs/sort_stack.c srcs/print_stack.c srcs/parsing.c
+SRCS =	srcs/push_swap.c \
+		srcs/main.c \
+		srcs/sort_stack.c \
+		srcs/print_stack.c \
+		srcs/parsing.c \
+		srcs/push.c \
+		srcs/reverse.c \
+		srcs/rotate.c \
 
 INCLUDES = -I include
 LIBFT_DIR = libs/Libft
