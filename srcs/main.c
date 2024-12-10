@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 
 	stack = NULL;
 
-	test_operations(); // a enlever
+	test_operations(argc, argv); // a enlever
 	if (parsing(argc, argv) >= 0)
 	{
 		stack = creat_stack(argc, argv);

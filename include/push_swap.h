@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/09 18:41:33 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:25:00 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_stack{
 
 // test
 void	print_stack(t_stack *stack);
-void test_operations();
+void test_operations(int argc, char **argv);
 //t_stack *push_swap(t_stack *stack);
 t_stack *init_stack();
 t_stack *creat_stack(int argc, char **argv);
