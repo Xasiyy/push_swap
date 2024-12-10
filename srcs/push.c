@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:28:02 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/09 13:53:57 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:28:03 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	pa(t_stack *stack_a, t_stack *stack_b)
 	push(stack_a, stack_b);
 }
 
-void	pb(t_stack *stack_a, t_stack *stack_b)
+void	pb(t_stack *stack_b, t_stack *stack_a)
 {
 	write(1, "pb\n", 3);
 	push(stack_b, stack_a);

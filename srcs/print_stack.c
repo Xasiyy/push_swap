@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_stack.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:36:45 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/10 09:55:42 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:26:42 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void    test_operations()
     t_stack *stack_b = init_stack();
 
     int values_a[] = {1, 2, 3, 4, 5};
-    int values_b[] = {6, 7, 8, 9, 10};
+    int values_b[] = {};
 
     init_stack_with_values(stack_a, values_a, 5);
-    init_stack_with_values(stack_b, values_b, 5);
+    init_stack_with_values(stack_b, values_b, 0);
 
     printf("Initial stack A:\n");
     print_stack(stack_a);
