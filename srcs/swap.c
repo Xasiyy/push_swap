@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 17:02:23 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/09 10:11:33 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/10 09:46:54 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@ void	swap(t_stack *stack)
 	t_node *first;
 	t_node *second;
 	
-	if (stack->top && stack->top->next && stack->top != stack->top->next)
+	if (stack->top && stack->top->next)
 	{
 		first = stack->top;
 		second = stack->top->next;
 		first->next = second->next;
-		second->next->prev = first;
+		if (second->next)
+			second->next->prev = first;
 		second->next = first;
 		second->prev = first->prev;
-		first->prev->next = second;
+		if (first->prev)
+			first->prev->next = second; 
 		first->prev = second;
 		stack->top = second;
 	}

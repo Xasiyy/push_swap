@@ -2,6 +2,7 @@ NAME = push_swap
 
 SRCS =	srcs/push_swap.c \
 		srcs/main.c \
+		srcs/swap.c \
 		srcs/sort_stack.c \
 		srcs/print_stack.c \
 		srcs/parsing.c \

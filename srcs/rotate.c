@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 16:25:31 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/08 21:16:21 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/09 14:51:08 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	rotate(t_stack *stack)
 	if (stack->top == NULL || stack->top->next == NULL)
 		return ;
 	first = stack->top;
-	last = stack-top->prev;
+	last = stack->top->prev;
 	stack->top = first->next;
 	stack->top->prev = last;
 	last->next = first->next;

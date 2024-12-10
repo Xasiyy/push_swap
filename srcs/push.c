@@ -6,13 +6,13 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:28:02 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/06 16:56:04 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:53:57 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push(t_stack *stack)
+void	push(t_stack *src, t_stack *dest)
 {
 	t_node *move_node;
 	
@@ -21,30 +21,22 @@ void	push(t_stack *stack)
 	move_node = src->top;
 	src->top = src->top->next;
 	if (src->top != NULL)
-		src->top->prev = move_node->prev;
-	if (dest->top == NULL)
-	{
-		move_node->next = NULL;
-		move_node->prev = NULL;
+		src->top->prev = NULL;
+	move_node->next = dest->top;
+	if (dest->top != NULL)
 		dest->top = move_node;
-	}
-	else
-	{
-		move_node->next = dest->top;
-		move_node->prev = dest->top->prev;
-		dest->top->prev = move_node;
-		dest->top = move_node;
-	}
+	dest->top = move_node;
+	dest->top->prev = NULL;
 }
 
 void	pa(t_stack *stack_a, t_stack *stack_b)
 {
-	write (1, "pa\n", 3)
-	push(stack_a);
+	write (1, "pa\n", 3);
+	push(stack_a, stack_b);
 }
 
-void	pb(t_stack *staack_a, t_stack *stack_b)
+void	pb(t_stack *stack_a, t_stack *stack_b)
 {
 	write(1, "pb\n", 3);
-	push(stack_b);
+	push(stack_b, stack_a);
 }
