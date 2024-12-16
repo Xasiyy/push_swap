@@ -14,17 +14,24 @@
 
 int	main(int argc, char **argv)
 {
-	t_stack	*stack;
-
-	stack = NULL;
+	t_stack	*stack_a;
+	t_stack *stack_b;
 
 	test_operations(argc, argv); // a enlever
 	if (parsing(argc, argv) >= 0)
 	{
-		stack = creat_stack(argc, argv);
-		if (!stack)
+		stack_a = create_stack(argc, argv);
+		if (!stack_a)
 			return (1);
-		free(stack);
+		stack_b = init_stack();
+		if (!stack_b)
+		{
+			free(stack_b);
+			return (1);
+		}
+		partition_stack(stack_a, stack_b);
+		free(stack_a);
+		free(stack_b);
 		return (0);
 	}
 	else

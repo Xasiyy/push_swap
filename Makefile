@@ -9,6 +9,7 @@ SRCS =	srcs/push_swap.c \
 		srcs/push.c \
 		srcs/reverse.c \
 		srcs/rotate.c \
+		srcs/algo.c \
 
 INCLUDES = -I include
 LIBFT_DIR = libs/Libft

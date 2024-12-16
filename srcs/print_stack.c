@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:36:45 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/10 15:27:03 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/16 10:13:19 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void    test_operations(int argc, char **argv)
     init_stack_with_values(stack_a, values_a, 5);
     init_stack_with_values(stack_b, values_b, 0); */
 
-    stack_a = creat_stack(argc, argv);
+    stack_a = create_stack(argc, argv);
 
     printf("Initial stack A:\n");
     print_stack(stack_a);

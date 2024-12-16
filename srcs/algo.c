@@ -3,14 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   algo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:18:23 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/15 21:40:57 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/16 09:57:34 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	insertion_sort(int *arr, int n)
+{
+	int i;
+	int key;
+	int j;
+
+	i = 0;
+	while (i < n)
+	{
+		key = arr[i];
+		j = i - 1;
+		while (j >= 0 && arr[j] > key)
+		{
+			arr[j + 1] = arr[j];
+			j = j - 1;
+		}
+		arr[j + 1] = key;
+		i++;
+	}
+}
+
+int	find_pivot(t_stack *stack)
+{
+	int size;
+	int *value;
+	int i;
+	t_node *current;
+	int pivot;
+
+	size = stack_size(stack);
+	if(size == 0)
+		return (-1);
+	value = (int*)malloc(size * sizeof(int));
+	if(!value)
+		return (-1);
+	current = stack->top;
+	i = 0;
+	while (current)
+	{
+		value[i] = current->value;
+		current = current->next;
+		i++;
+	}
+	insertion_sort(value, size);
+	pivot = value[size / 2];
+	free (value);
+
+	return (pivot);
+}
 
 int	find_min(t_stack *stack)
 {
@@ -49,11 +99,6 @@ int	find_max(t_stack *stack)
 	return (max);
 }
 
-int	find_pivot(t_stack *stack, int low, int high)
-{
-	return ((low + high) / 2);
-}
-
 int	stack_size(t_stack *stack)
 {
 	int size;
@@ -68,14 +113,14 @@ int	stack_size(t_stack *stack)
 	return (size);
 }
 
-int	partition_stack(t_stack *a, t_stack *b, int low, int high)
+int	partition_stack(t_stack *a, t_stack *b)
 {
 	int pivot;
 	int size;
 	int i;
 
 	i = 0;
-	pivot = find_pivot(a, low, high);
+	pivot = find_pivot(a);
 	size = stack_size(a);
 	while (i < size)
 	{
@@ -98,7 +143,7 @@ void	quicksort(t_stack *a, t_stack *b)
 		return ;
 	if (is_sorted(a))
 		return ;
-	pivot = partition_stack(a, b, find_min(a), find_max(a));
+	pivot = partition_stack(a, b);
 	quicksort(a, b);
 	quicksort(b, a);
 }

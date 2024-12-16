@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:18:20 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/06 16:22:00 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/16 10:13:19 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	add_elem(t_stack *stack, int value)
 	}
 }
 
-t_stack *creat_stack(int argc, char **argv)
+t_stack *create_stack(int argc, char **argv)
 {
 	t_stack *stack;
 	int		i;
