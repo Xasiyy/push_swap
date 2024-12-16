@@ -6,13 +6,160 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:18:23 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/13 15:09:00 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/15 21:40:57 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	Quicksort_stack()
+int	find_min(t_stack *stack)
 {
+	int min;
+	t_node *current;
+
+	if(!stack || !stack->top)
+		return (-1);
+	min = stack->top->value;
+	current = stack->top->next;
 	
+	while (current)
+	{
+		if (current->value < min)
+			min = current->value;
+		current = current->next;
+	}
+	return (min);
+}
+
+int	find_max(t_stack *stack)
+{
+	int max;
+	t_node *current;
+	
+	if (!stack || !stack->top)
+		return (-1);
+	max = stack->top->value;
+	current = stack->top->next;
+	while (current)
+	{
+		if (current->value > max)
+			max = current->value;
+		current = current->next;
+	}
+	return (max);
+}
+
+int	find_pivot(t_stack *stack, int low, int high)
+{
+	return ((low + high) / 2);
+}
+
+int	stack_size(t_stack *stack)
+{
+	int size;
+	t_node *current = stack->top;
+
+	size = 0;
+	while (current)
+	{
+		size++;
+		current = current->next;
+	}
+	return (size);
+}
+
+int	partition_stack(t_stack *a, t_stack *b, int low, int high)
+{
+	int pivot;
+	int size;
+	int i;
+
+	i = 0;
+	pivot = find_pivot(a, low, high);
+	size = stack_size(a);
+	while (i < size)
+	{
+		if (a->top->value < pivot)
+			pb(a, b);
+		else
+			ra(a);
+		i++;
+	}
+	while (stack_size(b) > 0)
+		pa(a, b);
+	return (pivot);
+}
+
+void	quicksort(t_stack *a, t_stack *b)
+{
+	int pivot;
+
+	if (stack_size(a) <= 1)
+		return ;
+	if (is_sorted(a))
+		return ;
+	pivot = partition_stack(a, b, find_min(a), find_max(a));
+	quicksort(a, b);
+	quicksort(b, a);
+}
+
+void	bucket_sort(t_stack *a, t_stack *b, int stack_count)
+{
+	int min; 
+	int max;
+	int range;
+	int bucket_min;
+	int bucket_max;
+	int size;
+	int j;
+	int i;
+
+	i = 0;
+	j = 0;
+	max = find_max(a);
+	min = find_min(a);
+	range = (max - min + 1) / stack_count;
+	if (is_sorted(a))
+		return ;
+	while (i < stack_count)
+	{
+		bucket_min = min + i * range;
+		bucket_max = bucket_min + range - 1;
+		size = stack_size(a);
+		while (j < size)
+		{
+			if(a->top->value >= bucket_min && a->top->value <= bucket_max)
+				pb(a, b);
+			else
+				ra(a);
+			j++;
+		}
+		quicksort(b, a);
+		while (stack_size(b) > 0)
+			pa(a, b);
+		i++;
+	}
+}
+
+void	restore_stack(t_stack *stack, int rotations)
+{
+	while (rotations > 0)
+	{
+		rra(stack);
+		rotations--;
+	}
+}
+
+int	is_sorted(t_stack *stack)
+{
+	t_node *current;
+
+	current = stack->top;
+	while (current && current->next)
+	{
+		if (current->value > current->next->value)
+			return (0);
+		current = current->next;
+	}		
+	return (1);
 }
