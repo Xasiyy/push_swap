@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:18:20 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/16 10:13:19 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/19 10:04:15 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_stack *init_stack()
 	if (!stack)
 		exit (1);
 	stack->top = NULL;
+	stack->size = 0;
 	return (stack);
 }
 
@@ -33,6 +34,7 @@ void	add_elem(t_stack *stack, int value)
 		return ;
 	new_node->value = value;
 	new_node->next = NULL;
+	new_node->prev = NULL;
 	if (stack->top == NULL)
 		stack->top = new_node;
 	else 
@@ -41,7 +43,9 @@ void	add_elem(t_stack *stack, int value)
 		while (current->next != NULL)
 			current = current->next;
 		current->next = new_node;
+		new_node->prev = current;
 	}
+	stack->size++;
 }
 
 t_stack *create_stack(int argc, char **argv)
@@ -49,7 +53,7 @@ t_stack *create_stack(int argc, char **argv)
 	t_stack *stack;
 	int		i;
 	int		value;
-	
+
 	stack = init_stack();
 	if (!stack)
 		return (NULL);
@@ -75,6 +79,36 @@ void	free_stack(t_stack *stack)
 		next_node = current->next;
 		free(current);
 		current = next_node;
+		stack->size--;
 	}
 	free(stack);
+}
+
+void	remove_elem(t_stack *stack, int value)
+{
+	t_node *current;
+	t_node *temp;
+	
+	if (!stack || stack->top)
+		return ;
+	current = stack->top;
+	while (current)
+	{
+		if (current->value == value)
+		{
+			if (current->prev)
+				current->prev->next = current->next;
+			else
+				stack->top = current->next;
+			if (current->next)
+				current->next->prev = current->prev;
+			temp = current;
+			current = current->next;
+			free(temp);
+			stack->size--;
+			return ;
+		}
+		else
+			current = current->next;
+	}
 }

@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   algo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:18:23 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/16 09:57:34 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:14:52 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	sort_stack(t_stack *stack_a, t_stack *stack_b)
+{
+    int size;
+
+    if (!stack_a || !stack_b)
+        return;
+    size = stack_size(stack_a);
+    if (size <= 3)
+        sort_three(stack_a);
+    else if (size <= 50)
+        bucket_sort(stack_a, stack_b, 5);
+//	else
+//		radix_sort(stack_a, stack_b);
+}
+
+int	stack_size(t_stack *stack)
+{
+	int size;
+	t_node *current;
+
+	if (!stack)
+		return 0;
+	current = stack->top;
+	size = 0;
+	while (current)
+	{
+		size++;
+		current = current->next;
+	}
+	return (size);
+}
 
 void	insertion_sort(int *arr, int n)
 {
@@ -18,6 +50,8 @@ void	insertion_sort(int *arr, int n)
 	int key;
 	int j;
 
+    if (!arr || n <= 0)
+		return ;
 	i = 0;
 	while (i < n)
 	{
@@ -35,30 +69,26 @@ void	insertion_sort(int *arr, int n)
 
 int	find_pivot(t_stack *stack)
 {
-	int size;
 	int *value;
 	int i;
 	t_node *current;
 	int pivot;
 
-	size = stack_size(stack);
-	if(size == 0)
+	if(!stack || stack->size == 0)
 		return (-1);
-	value = (int*)malloc(size * sizeof(int));
-	if(!value)
+	value = malloc(sizeof(int) * stack->size);
+	if (!value)
 		return (-1);
 	current = stack->top;
 	i = 0;
 	while (current)
 	{
-		value[i] = current->value;
+		value[i++] = current->value;
 		current = current->next;
-		i++;
 	}
-	insertion_sort(value, size);
-	pivot = value[size / 2];
+	insertion_sort(value, stack->size);
+	pivot = value[stack->size / 2];
 	free (value);
-
 	return (pivot);
 }
 
@@ -99,39 +129,31 @@ int	find_max(t_stack *stack)
 	return (max);
 }
 
-int	stack_size(t_stack *stack)
+int	partition_stack(t_stack *a, t_stack *b, int pivot)
 {
-	int size;
-	t_node *current = stack->top;
-
-	size = 0;
-	while (current)
-	{
-		size++;
-		current = current->next;
-	}
-	return (size);
-}
-
-int	partition_stack(t_stack *a, t_stack *b)
-{
-	int pivot;
+	int rotation;
 	int size;
 	int i;
 
+	rotation = 0;
 	i = 0;
-	pivot = find_pivot(a);
 	size = stack_size(a);
-	while (i < size)
+	while (i < size && a->top)
 	{
 		if (a->top->value < pivot)
 			pb(a, b);
 		else
+		{
 			ra(a);
+			rotation++;
+		}
 		i++;
 	}
-	while (stack_size(b) > 0)
-		pa(a, b);
+	while (rotation > 0)
+	{
+		rra(a);
+		rotation--;
+	}
 	return (pivot);
 }
 
@@ -139,16 +161,18 @@ void	quicksort(t_stack *a, t_stack *b)
 {
 	int pivot;
 
-	if (stack_size(a) <= 1)
+	if (stack_size(a) <= 1 || is_sorted(a))
 		return ;
-	if (is_sorted(a))
-		return ;
-	pivot = partition_stack(a, b);
+	pivot = find_pivot(a);
+	partition_stack(a, b, pivot);
 	quicksort(a, b);
 	quicksort(b, a);
+	while (stack_size(b) > 0)
+		pa(a, b);
+		
 }
 
-void	bucket_sort(t_stack *a, t_stack *b, int stack_count)
+/* void	bucket_sort(t_stack *a, t_stack *b, int stack_count)
 {
 	int min; 
 	int max;
@@ -160,7 +184,6 @@ void	bucket_sort(t_stack *a, t_stack *b, int stack_count)
 	int i;
 
 	i = 0;
-	j = 0;
 	max = find_max(a);
 	min = find_min(a);
 	range = (max - min + 1) / stack_count;
@@ -171,6 +194,7 @@ void	bucket_sort(t_stack *a, t_stack *b, int stack_count)
 		bucket_min = min + i * range;
 		bucket_max = bucket_min + range - 1;
 		size = stack_size(a);
+		j = 0;
 		while (j < size)
 		{
 			if(a->top->value >= bucket_min && a->top->value <= bucket_max)
@@ -184,7 +208,7 @@ void	bucket_sort(t_stack *a, t_stack *b, int stack_count)
 			pa(a, b);
 		i++;
 	}
-}
+} */
 
 void	restore_stack(t_stack *stack, int rotations)
 {

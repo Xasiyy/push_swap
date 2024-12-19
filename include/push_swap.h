@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/16 10:13:19 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:13:51 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct s_node{
 }	t_node;
 
 typedef struct s_stack{
-	t_node *top;	
+	t_node *top;
+	int size;
 }	t_stack;
 
 // test
@@ -35,6 +36,7 @@ void test_operations(int argc, char **argv);
 t_stack *init_stack();
 t_stack *create_stack(int argc, char **argv);
 void	add_elem(t_stack *stack, int value);
+void	remove_elem(t_stack *stack, int value);
 void	free_stack(t_stack *stack);
 int		parsing(int argc, char **argv);
 void	push(t_stack *src, t_stack *dest);
@@ -57,10 +59,12 @@ int	find_min(t_stack *stack);
 int	find_max(t_stack *stack);
 int	find_pivot(t_stack *stack);
 int	stack_size(t_stack *stack);
-int	partition_stack(t_stack *a, t_stack *b);
+int	partition_stack(t_stack *a, t_stack *b, int pivot);
 void	quicksort(t_stack *a, t_stack *b);
-void	bucket_sort(t_stack *a, t_stack *b, int stack_count);
 void	restore_stack(t_stack *stack, int rotations);
 int	is_sorted(t_stack *stack);
+void	sort_three(t_stack *stack);
+void	bucket_sort(t_stack *stack_a, t_stack *stack_b, int bucket_count);
+void	sort_stack(t_stack *stack_a, t_stack *stack_b);
 
 #endif

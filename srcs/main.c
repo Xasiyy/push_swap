@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 	t_stack *stack_b;
 
-	test_operations(argc, argv); // a enlever
+//	test_operations(argc, argv); // a enlever
 	if (parsing(argc, argv) >= 0)
 	{
 		stack_a = create_stack(argc, argv);
@@ -26,12 +26,16 @@ int	main(int argc, char **argv)
 		stack_b = init_stack();
 		if (!stack_b)
 		{
-			free(stack_b);
+			free_stack(stack_b);
 			return (1);
 		}
-		partition_stack(stack_a, stack_b);
-		free(stack_a);
-		free(stack_b);
+	//	partition_stack(stack_a, stack_b);
+	//	bucket_sort(stack_a, stack_b, 10);
+	//	sort_three(stack_a);
+		sort_stack(stack_a, stack_b);
+		print_stack(stack_a);
+		free_stack(stack_a);
+		free_stack(stack_b);
 		return (0);
 	}
 	else

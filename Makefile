@@ -10,13 +10,16 @@ SRCS =	srcs/push_swap.c \
 		srcs/reverse.c \
 		srcs/rotate.c \
 		srcs/algo.c \
+		srcs/sort_three.c \
+		srcs/bucket_sort.c \
 
 INCLUDES = -I include
 LIBFT_DIR = libs/Libft
 LIBFT_NAME = libft.a
 LIBFT = $(LIBFT_DIR)/$(LIBFT_NAME)
 
-OBJS = $(SRCS:.c=.o)
+OBJ_DIR = bin
+OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
@@ -29,7 +32,8 @@ $(NAME): $(OBJS) $(LIBFT)
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(OBJ_DIR)/$(dir $<)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

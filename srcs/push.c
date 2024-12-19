@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:28:02 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/10 10:28:03 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:59:30 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,22 @@ void	push(t_stack *src, t_stack *dest)
 		dest->top = move_node;
 	dest->top = move_node;
 	dest->top->prev = NULL;
+	src->size--;
+	dest->size++;
 }
 
 void	pa(t_stack *stack_a, t_stack *stack_b)
 {
+	if (!stack_a || !stack_a->top)
+		return ;
 	write (1, "pa\n", 3);
 	push(stack_a, stack_b);
 }
 
 void	pb(t_stack *stack_b, t_stack *stack_a)
 {
+	if (!stack_a || !stack_a->top)
+		return ;
 	write(1, "pb\n", 3);
 	push(stack_b, stack_a);
 }

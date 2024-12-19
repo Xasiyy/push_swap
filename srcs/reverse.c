@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 21:17:02 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/09 13:54:39 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:15:19 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	reverse(t_stack *stack)
 	t_node *last;
 	t_node *second_last;
 		
-	if (stack->top == NULL || stack->top->next == NULL)
+	if (!stack->top || !stack->top->next)
 		return ;
 	last = stack->top;
 	second_last = NULL;
@@ -26,7 +26,8 @@ void	reverse(t_stack *stack)
 		second_last = last;
 		last = last->next;
 	}
-	second_last->next = NULL;
+	if (second_last)
+		second_last->next = NULL;
 	last->next = stack->top;
 	stack->top->prev = last;
 	stack->top = last;
@@ -35,18 +36,24 @@ void	reverse(t_stack *stack)
 
 void	rra(t_stack *stack_a)
 {
+	if (!stack_a || !stack_a->top || !stack_a->top->next)
+        return;
 	write (1, "rra\n", 4);
 	reverse(stack_a);
 }
 
 void	rrb(t_stack *stack_b)
 {
+	if (!stack_b)
+		return ;
 	write (1, "rrb\n", 4);
 	reverse(stack_b);
 }
 
 void	rrr(t_stack *stack_a, t_stack *stack_b)
 {
+	if (!stack_a || !stack_b)
+		return ;
 	write (1, "rrr\n", 4);
 	reverse(stack_a);	
 	reverse(stack_b);

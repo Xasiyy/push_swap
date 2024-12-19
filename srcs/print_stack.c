@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_stack.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:36:45 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/16 10:13:19 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:35:15 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void print_stack(t_stack *stack)
       printf("%d\n", current->value);
       current = current->next;
    }
+   printf("size: %d\n", stack->size);
 }
 
 void init_stack_with_values(t_stack *stack, int values[], int size)
