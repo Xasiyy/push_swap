@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:18:23 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/19 14:14:52 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/19 19:03:02 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ void	insertion_sort(int *arr, int n)
 	int key;
 	int j;
 
-    if (!arr || n <= 0)
-		return ;
-	i = 0;
+	i = 1;
 	while (i < n)
 	{
 		key = arr[i];
@@ -69,12 +67,14 @@ void	insertion_sort(int *arr, int n)
 
 int	find_pivot(t_stack *stack)
 {
+	int size;
 	int *value;
 	int i;
 	t_node *current;
 	int pivot;
 
-	if(!stack || stack->size == 0)
+	size = stack_size(stack);
+	if (size == 0)
 		return (-1);
 	value = malloc(sizeof(int) * stack->size);
 	if (!value)

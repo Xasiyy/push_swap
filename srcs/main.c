@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+/* int	main(int argc, char **argv)
 {
 	t_stack	*stack_a;
 	t_stack *stack_b;
@@ -41,4 +41,43 @@ int	main(int argc, char **argv)
 	else
 	    printf("error doublon"); // a enlever
 	return (0);
+} */
+
+int	main(int argc, char **argv)
+{
+    t_stack	*stack_a;
+    t_stack *stack_b;
+
+    if (argc < 2)
+        return (1);
+
+    if (parsing(argc, argv) < 0)
+    {
+        printf("error: duplicate value\n");
+        return (1);
+    }
+
+    stack_a = create_stack(argc, argv);
+    if (!stack_a)
+        return (1);
+
+    stack_b = init_stack();
+    if (!stack_b)
+    {
+        free_stack(stack_a);
+        return (1);
+    }
+
+    printf("Initial stack A:\n");
+    print_stack(stack_a);
+
+    sort_stack(stack_a, stack_b);
+
+    printf("Sorted stack A:\n");
+    print_stack(stack_a);
+
+    free_stack(stack_a);
+    free_stack(stack_b);
+
+    return (0);
 }
