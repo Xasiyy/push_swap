@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:24:11 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/20 14:07:08 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:46:32 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void	radix_sort(t_stack *stack_a, t_stack *stack_b)
 	int size;
 	int i;
 	int j;
+	int rotations;
+	int min_value;
+	t_node *current;
 
 	max_value = find_max(stack_a);
 	num_bits = 0;
@@ -39,13 +42,35 @@ void	radix_sort(t_stack *stack_a, t_stack *stack_b)
 		}
 		while (stack_size(stack_b) > 0)
 		{
+/* 			if (stack_size(stack_b) > 1 && stack_b->top->value > stack_b->top->next->value)
+				sb(stack_b); */
 			pa(stack_b, stack_a);
 		}
 		i++;
 	}
-	while (!is_sorted(stack_a))
+	if (!is_sorted(stack_a))
 	{
-		rra(stack_a);
+		rotations = 0;
+		min_value = find_min(stack_a);
+		current = stack_a->top;
+		while (current)
+		{
+			if (current->value == min_value)
+				break;
+			rotations++;
+			current = current->next;
+		}
+		if (rotations <= stack_size(stack_a) / 2)
+		{
+			while (rotations-- > 0)
+				ra(stack_a);
+		}
+		else
+		{	
+			rotations = stack_size(stack_a) - rotations;
+			while (rotations-- > 0)
+				rra(stack_a);
+		}
 	}
 }
 
