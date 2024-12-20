@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:18:23 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/19 19:03:02 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:52:07 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ void	sort_stack(t_stack *stack_a, t_stack *stack_b)
     size = stack_size(stack_a);
     if (size <= 3)
         sort_three(stack_a);
-    else if (size <= 50)
-        bucket_sort(stack_a, stack_b, 5);
-//	else
-//		radix_sort(stack_a, stack_b);
+    else
+        radix_sort(stack_a, stack_b);
 }
 
 int	stack_size(t_stack *stack)
@@ -223,6 +221,8 @@ int	is_sorted(t_stack *stack)
 {
 	t_node *current;
 
+	if (!stack || !stack->top)
+		return (1);
 	current = stack->top;
 	while (current && current->next)
 	{

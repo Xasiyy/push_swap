@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:28:02 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/19 12:59:30 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:22:53 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,35 @@ void	push(t_stack *src, t_stack *dest)
 {
 	t_node *move_node;
 	
-	if (src->top == NULL)
+	if (!src || !src->top)
 		return ;
 	move_node = src->top;
 	src->top = src->top->next;
-	if (src->top != NULL)
+	if (src->top)
 		src->top->prev = NULL;
 	move_node->next = dest->top;
-	if (dest->top != NULL)
-		dest->top = move_node;
+	if (dest->top)
+		dest->top->prev = move_node;
 	dest->top = move_node;
-	dest->top->prev = NULL;
 	src->size--;
 	dest->size++;
 }
 
-void	pa(t_stack *stack_a, t_stack *stack_b)
+void	pa(t_stack *stack_b, t_stack *stack_a)
 {
-	if (!stack_a || !stack_a->top)
+	if (!stack_b || !stack_b->top)
+	{
+		printf("vide\n");
 		return ;
+	}
 	write (1, "pa\n", 3);
-	push(stack_a, stack_b);
+	push(stack_b, stack_a);
 }
 
-void	pb(t_stack *stack_b, t_stack *stack_a)
+void	pb(t_stack *stack_a, t_stack *stack_b)
 {
 	if (!stack_a || !stack_a->top)
 		return ;
 	write(1, "pb\n", 3);
-	push(stack_b, stack_a);
+	push(stack_a, stack_b);
 }

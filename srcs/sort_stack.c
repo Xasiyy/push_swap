@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 22:18:20 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/19 10:04:15 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:17:22 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_stack *init_stack()
 	
 	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (!stack)
-		exit (1);
+		return (NULL);
 	stack->top = NULL;
 	stack->size = 0;
 	return (stack);
@@ -64,7 +64,6 @@ t_stack *create_stack(int argc, char **argv)
 		add_elem(stack, value);
 		i++;
 	}
-	print_stack (stack);
 	return (stack);
 }
 

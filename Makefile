@@ -12,6 +12,7 @@ SRCS =	srcs/push_swap.c \
 		srcs/algo.c \
 		srcs/sort_three.c \
 		srcs/bucket_sort.c \
+		srcs/radix_sort.c \
 
 INCLUDES = -I include
 LIBFT_DIR = libs/Libft

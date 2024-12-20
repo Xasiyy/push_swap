@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 21:17:02 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/19 15:15:19 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:46:27 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	reverse(t_stack *stack)
 	t_node *last;
 	t_node *second_last;
 		
-	if (!stack->top || !stack->top->next)
+	if (!stack || !stack->top || !stack->top->next)
 		return ;
 	last = stack->top;
 	second_last = NULL;
@@ -26,8 +26,7 @@ void	reverse(t_stack *stack)
 		second_last = last;
 		last = last->next;
 	}
-	if (second_last)
-		second_last->next = NULL;
+	second_last->next = NULL;
 	last->next = stack->top;
 	stack->top->prev = last;
 	stack->top = last;
@@ -44,7 +43,7 @@ void	rra(t_stack *stack_a)
 
 void	rrb(t_stack *stack_b)
 {
-	if (!stack_b)
+	if (!stack_b || !stack_b->top || !stack_b->top->next)
 		return ;
 	write (1, "rrb\n", 4);
 	reverse(stack_b);

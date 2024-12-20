@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/19 12:13:51 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/20 11:09:42 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	remove_elem(t_stack *stack, int value);
 void	free_stack(t_stack *stack);
 int		parsing(int argc, char **argv);
 void	push(t_stack *src, t_stack *dest);
-void	pa(t_stack *stack_a, t_stack *stack_b);
-void	pb(t_stack *staack_a, t_stack *stack_b);
+void	pa(t_stack *stack_b, t_stack *stack_a);
+void	pb(t_stack *stack_a, t_stack *stack_b);
 void	swap(t_stack *stack);
 void	sa(t_stack *stack_a);
 void	sb(t_stack *stack_b);
@@ -66,5 +66,6 @@ int	is_sorted(t_stack *stack);
 void	sort_three(t_stack *stack);
 void	bucket_sort(t_stack *stack_a, t_stack *stack_b, int bucket_count);
 void	sort_stack(t_stack *stack_a, t_stack *stack_b);
+void	radix_sort(t_stack *stack_a, t_stack *stack_b);
 
 #endif
