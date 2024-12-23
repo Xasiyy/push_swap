@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/20 11:09:42 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:13:39 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_stack{
 	t_node *top;
 	int size;
 }	t_stack;
+
+extern int count; //a enlever 
 
 // test
 void	print_stack(t_stack *stack);

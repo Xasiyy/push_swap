@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   radix_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:24:11 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/21 13:16:51 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:58:24 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* void	radix_sort(t_stack *stack_a, t_stack *stack_b)
+void	radix_sort(t_stack *stack_a, t_stack *stack_b)
 {
 	int	max_value;
 	int num_bits;
@@ -40,37 +40,36 @@
 				pb(stack_a, stack_b);
 			j++;
 		}
-		while (stack_size(stack_b) > 0)
-			pa(stack_b, stack_a);
+		while (stack_size(stack_b) > 1 && stack_b->top->value < stack_b->top->next->value)
+			sb(stack_b);
 		i++;
 	}
-	if (!is_sorted(stack_a))
+	while (stack_size(stack_b) > 0)
+		pa(stack_b, stack_a);
+	rotations = 0;
+	min_value = find_min(stack_a);
+	current = stack_a->top;
+	while (current)
 	{
-		rotations = 0;
-		min_value = find_min(stack_a);
-		current = stack_a->top;
-		while (current)
-		{
-			if (current->value == min_value)
-				break;
-			rotations++;
-			current = current->next;
-		}
-		if (rotations <= stack_size(stack_a) / 2)
-		{
-			while (rotations-- > 0)
-				ra(stack_a);
-		}
-		else
-		{	
-			rotations = stack_size(stack_a) - rotations;
-			while (rotations-- > 0)
-				rra(stack_a);
-		}
+		if (current->value == min_value)
+			break;
+		rotations++;
+		current = current->next;
 	}
-} */
+	if (rotations <= stack_size(stack_a) / 2)
+	{
+		while (rotations-- > 0)
+			ra(stack_a);
+	}
+	else
+	{
+		rotations = stack_size(stack_a) - rotations;	
+		while (rotations-- > 0)
+			rra(stack_a);
+	}
+}
 
-void radix_sort(t_stack *stack_a, t_stack *stack_b)
+/* void radix_sort(t_stack *stack_a, t_stack *stack_b)
 {
     int max_value;
     int num_bits;
@@ -100,4 +99,4 @@ void radix_sort(t_stack *stack_a, t_stack *stack_b)
             pa(stack_a, stack_b);
         i++;
     }
-}
+} */

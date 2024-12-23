@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 17:02:23 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/10 09:46:54 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:15:16 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,21 @@ void	swap(t_stack *stack)
 
 void	sa(t_stack *stack_a)
 {
+	count++;
 	write (1, "sa\n", 3);
 	swap(stack_a);
 }
 
 void	sb(t_stack *stack_b)
 {
+	count++;
 	write (1, "sb\n", 3);
 	swap (stack_b);
 }
 
 void	ss(t_stack *stack_a, t_stack *stack_b)
 {
+	count++;
 	write (1, "ss\n", 3);
 	swap (stack_a);
 	swap (stack_b);

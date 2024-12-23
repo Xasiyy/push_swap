@@ -43,6 +43,8 @@
 	return (0);
 } */
 
+int count;
+
 int	main(int argc, char **argv)
 {
     t_stack	*stack_a;
@@ -76,6 +78,7 @@ int	main(int argc, char **argv)
     print_stack(stack_a);
 	printf("stack B :");
 	print_stack(stack_b);
+	printf("count : %d\n", count);
 
     free_stack(stack_a);
     free_stack(stack_b);
