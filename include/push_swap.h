@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:45:41 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/23 15:13:39 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:25:05 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	is_sorted(t_stack *stack);
 void	sort_three(t_stack *stack);
 void	bucket_sort(t_stack *stack_a, t_stack *stack_b, int bucket_count);
 void	sort_stack(t_stack *stack_a, t_stack *stack_b);
-void	radix_sort(t_stack *stack_a, t_stack *stack_b);
+//void	radix_sort(t_stack *stack_a, t_stack *stack_b);
+//void radix_merge_sort(t_stack *stack_a, t_stack *stack_b);
+void	turkish_sort(t_stack *stack_a, t_stack*stack_b);
 
 #endif

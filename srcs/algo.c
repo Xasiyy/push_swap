@@ -6,13 +6,13 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:18:23 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/20 13:52:07 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:26:15 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_stack(t_stack *stack_a, t_stack *stack_b)
+/* void	sort_stack(t_stack *stack_a, t_stack *stack_b)
 {
     int size;
 
@@ -23,7 +23,7 @@ void	sort_stack(t_stack *stack_a, t_stack *stack_b)
         sort_three(stack_a);
     else
         radix_sort(stack_a, stack_b);
-}
+} */
 
 int	stack_size(t_stack *stack)
 {

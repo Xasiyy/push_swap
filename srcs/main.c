@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
     printf("Initial stack A:\n");
     print_stack(stack_a);
 
-    sort_stack(stack_a, stack_b);
+    turkish_sort(stack_a, stack_b);
     printf("Sorted stack A:\n");
     print_stack(stack_a);
 	printf("stack B :");
