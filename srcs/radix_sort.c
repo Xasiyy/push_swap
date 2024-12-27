@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   radix_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asdiallo <asiya040906@gmailc.com>          +#+  +:+       +#+        */
+/*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:24:11 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/27 10:57:30 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/27 11:32:57 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,25 @@ void	radix_sort(t_stack *stack_a, t_stack *stack_b)
 	num_bits = 0;
 	while ((max_value >> num_bits) != 0)
 		num_bits++;
-	while(!is_sorted(stack_a))
+	i = 0;
+	while (i < num_bits)
 	{
-		i = 0;
-		while (i < num_bits)
+		size = stack_size(stack_a);
+		j = 0;
+		while (j < size)
 		{
-			size = stack_size(stack_a);
-			j = 0;
-			while (j < size)
-			{
-				if (((stack_a->top->value >> i) & 1) == 1)
-					ra(stack_a);
-				else
-					pb(stack_a, stack_b);
-				j++;
-			}
-			while (stack_size(stack_b) > 1 && stack_b->top->value < stack_b->top->next->value)
-				sb(stack_b);
-			while (stack_size(stack_b) > 0)
-				pa(stack_b, stack_a);
-			i++;
+			if (((stack_a->top->value >> i) & 1) == 1)
+				ra(stack_a);
+			else
+				pb(stack_a, stack_b);
+			j++;
 		}
+		while (stack_size(stack_b) > 0)
+			pa(stack_b, stack_a);
+		i++;
+	}
+	if(!is_sorted(stack_a))
+	{
 		rotations = 0;
 		min_value = find_min(stack_a);
 		current = stack_a->top;
