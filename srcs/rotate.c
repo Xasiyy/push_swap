@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 16:25:31 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/23 15:15:55 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:04:13 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	rotate(t_stack *stack)
 	last->next = first;
 	first->prev = last;
 	first->next = NULL;
+	printf("rotation fait top = %d\n", stack->top->value);
 }
 
 void	ra(t_stack *stack_a)

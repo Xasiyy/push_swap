@@ -6,7 +6,7 @@
 /*   By: asdiallo <asiya040906@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:24:11 by asdiallo          #+#    #+#             */
-/*   Updated: 2024/12/27 15:30:38 by asdiallo         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:06:56 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,17 +159,19 @@ void	sort_subset(t_stack *stack)
 	init_stack(&sorted);
 	int min_value;
 
+    if (!stack || !stack->top)
+		return ;
 	while (stack_size(stack) > 0)
 	{
 		min_value = find_min(stack);
-		while (stack->top->value != min_value)
+		while (stack->top && stack->top->value != min_value)
 			ra(stack);
-		pb(stack, &sorted);
+		if(stack->top)
+			pb(stack, &sorted);
 	}
 	while (stack_size(&sorted) > 0)
-	{
 		pa(&sorted, stack);
-	}
+	free_stack(&sorted);
 }
 
 void	merge_stacks(t_stack *stack_a, t_stack *stack_b)
@@ -177,19 +179,34 @@ void	merge_stacks(t_stack *stack_a, t_stack *stack_b)
 	t_stack result;
 	init_stack(&result);
 
+    if (!stack_a || !stack_b)
+        return;
     while (stack_size(stack_a) > 0 || stack_size(stack_b) > 0)
 	{
         if (stack_size(stack_a) == 0)
+        {
+            printf("stack_a vide, pa depuis stack_b\n");
             pa(stack_b, &result);
+        }
         else if (stack_size(stack_b) == 0)
+        {
+            printf("stack_b vide, pa depuis stack_a\n");
             pa(stack_a, &result);
+        }
         else if (stack_a->top->value <= stack_b->top->value)
+        {
+            printf("pa depuis stack_a\n");
             pa(stack_a, &result);
+        }
         else
+        {
+            printf("pa depuis stack_b\n");
             pa(stack_b, &result);
+        }
     }
 	while (stack_size(&result) > 0)
 		pa(&result, stack_a);
+	free_stack(&result);
 }
 
 void	turkish_algo(t_stack *stack_a, t_stack *stack_b)
@@ -209,11 +226,15 @@ void	turkish_sort(t_stack *stack_a, t_stack*stack_b)
 	int half;
 	int i;
 
+	if (!stack_a || !stack_b || stack_size(stack_a) <= 1)
+    	return ;
 	i = 0;
 	half = stack_size(stack_a) / 2;
-	while (i < half)
+	while (i < half && stack_a->top)
 	{
+    	printf("Avant pb : stack_a->size = %d, stack_b->size = %d\n", stack_a->size, stack_b->size);
 		pb(stack_a, stack_b);
+	    printf("Après pb : stack_a->size = %d, stack_b->size = %d\n", stack_a->size, stack_b->size);
 		i++;
 	}
 	sort_subset(stack_a);
