@@ -43,8 +43,6 @@
 	return (0);
 } */
 
-int count;
-
 int	main(int argc, char **argv)
 {
     t_stack	*stack_a;
@@ -64,11 +62,15 @@ int	main(int argc, char **argv)
         return (1);
 
     stack_b = init_stack();
+	printf("Nouvelle pile initialisée : top = %p, size = %d\n", stack_b->top, stack_b->size);
     if (!stack_b)
     {
         free_stack(stack_a);
         return (1);
     }
+
+	printf("Adresse de stack_a : %p\n", (void *)stack_a);
+	printf("Adresse de stack_b : %p\n", (void *)stack_b);
 
     printf("Initial stack A:\n");
     print_stack(stack_a);
@@ -78,10 +80,38 @@ int	main(int argc, char **argv)
     print_stack(stack_a);
 	printf("stack B :");
 	print_stack(stack_b);
-	printf("count : %d\n", count);
+	if (stack_a->size != 0)
+	{
+   	 printf("Erreur : la pile n'est pas vide avant le free !\n");
+	}
+    free_stack(stack_a);
+	printf("la pile a est free");
+    free_stack(stack_b);
+	printf("la pile b est free");
+    return (0);
+}
+
+/* int main(void)
+{
+    t_stack *stack_a = init_stack();
+    t_stack *stack_b = init_stack();
+
+    if (!stack_a || !stack_b)
+    {
+        printf("Erreur d'initialisation des piles.\n");
+        return (1);
+    }
+
+    // Ajouter des éléments à stack_a
+    add_elem(stack_a, 62);
+    add_elem(stack_a, 73);
+
+    printf("Avant pb : stack_a->size = %d, stack_b->size = %d\n", stack_a->size, stack_b->size);
+    pb(stack_a, stack_b);
+    printf("Après pb : stack_a->size = %d, stack_b->size = %d\n", stack_a->size, stack_b->size);
 
     free_stack(stack_a);
     free_stack(stack_b);
 
     return (0);
-}
+} */

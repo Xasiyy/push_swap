@@ -29,8 +29,6 @@ typedef struct s_stack{
 	int size;
 }	t_stack;
 
-extern int count; //a enlever 
-
 // test
 void	print_stack(t_stack *stack);
 void test_operations(int argc, char **argv);
@@ -63,11 +61,11 @@ int	find_pivot(t_stack *stack);
 int	stack_size(t_stack *stack);
 int	partition_stack(t_stack *a, t_stack *b, int pivot);
 void	quicksort(t_stack *a, t_stack *b);
-void	restore_stack(t_stack *stack, int rotations);
+//void	restore_stack(t_stack *stack, int rotations);
 int	is_sorted(t_stack *stack);
 void	sort_three(t_stack *stack);
 void	bucket_sort(t_stack *stack_a, t_stack *stack_b, int bucket_count);
-void	sort_stack(t_stack *stack_a, t_stack *stack_b);
+//void	sort_stack(t_stack *stack_a, t_stack *stack_b);
 //void	radix_sort(t_stack *stack_a, t_stack *stack_b);
 //void radix_merge_sort(t_stack *stack_a, t_stack *stack_b);
 void	turkish_sort(t_stack *stack_a, t_stack*stack_b);

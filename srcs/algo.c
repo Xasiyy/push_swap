@@ -208,14 +208,14 @@ void	quicksort(t_stack *a, t_stack *b)
 	}
 } */
 
-void	restore_stack(t_stack *stack, int rotations)
+/* void	restore_stack(t_stack *stack, int rotations)
 {
 	while (rotations > 0)
 	{
 		rra(stack);
 		rotations--;
 	}
-}
+} */
 
 int	is_sorted(t_stack *stack)
 {

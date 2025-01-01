@@ -37,7 +37,6 @@ void	rra(t_stack *stack_a)
 {
 	if (!stack_a || !stack_a->top || !stack_a->top->next)
         return;
-	count++;
 	write (1, "rra\n", 4);
 	reverse(stack_a);
 }
@@ -46,7 +45,6 @@ void	rrb(t_stack *stack_b)
 {
 	if (!stack_b || !stack_b->top || !stack_b->top->next)
 		return ;
-	count++;
 	write (1, "rrb\n", 4);
 	reverse(stack_b);
 }
@@ -55,7 +53,6 @@ void	rrr(t_stack *stack_a, t_stack *stack_b)
 {
 	if (!stack_a || !stack_b)
 		return ;
-	count++;
 	write (1, "rrr\n", 4);
 	reverse(stack_a);	
 	reverse(stack_b);

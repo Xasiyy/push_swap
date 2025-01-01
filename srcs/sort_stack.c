@@ -36,8 +36,6 @@ void	add_elem(t_stack *stack, int value)
 	new_node = (t_node *)malloc(sizeof(t_node));
 	if (!new_node)
 		return;
-	if (!new_node)
-		return ;
 	new_node->value = value;
 	new_node->next = NULL;
 	if (!stack->top)
@@ -88,12 +86,10 @@ void	free_stack(t_stack *stack)
 		next_node = current->next;
 		free(current);
 		current = next_node;
-		stack->size--;
 	}
 	stack->top = NULL;
 	stack->size = 0;
 	free(stack);
-	stack = NULL;
 	printf("Pile libérée avec succès.\n");
 }
 
