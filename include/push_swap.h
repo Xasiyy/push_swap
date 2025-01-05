@@ -35,6 +35,7 @@ void test_operations(int argc, char **argv);
 //t_stack *push_swap(t_stack *stack);
 t_stack *init_stack();
 t_stack *create_stack(int argc, char **argv);
+t_node *pop(t_stack *stack);
 void	add_elem(t_stack *stack, int value);
 void	remove_elem(t_stack *stack, int value);
 void	free_stack(t_stack *stack);

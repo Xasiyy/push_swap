@@ -90,6 +90,7 @@ void	free_stack(t_stack *stack)
 	stack->top = NULL;
 	stack->size = 0;
 	free(stack);
+	stack = NULL;
 	printf("Pile libérée avec succès.\n");
 }
 
@@ -130,4 +131,20 @@ void	remove_elem(t_stack *stack, int value)
 	}
 	if (real_size != stack->size)
 		stack->size = real_size;
+}
+
+t_node *pop(t_stack *stack)
+{
+	t_node *node_to_pop;
+
+	if (!stack || !stack->top)
+		return (NULL);
+	node_to_pop = stack->top;
+	stack->top = stack->top->next;
+	if (stack->top)
+		stack->top->prev = NULL;
+	stack->size--;
+	node_to_pop->next = NULL;
+	node_to_pop->prev = NULL;
+	return (node_to_pop);
 }

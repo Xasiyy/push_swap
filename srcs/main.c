@@ -96,22 +96,17 @@ int	main(int argc, char **argv)
     t_stack *stack_a = init_stack();
     t_stack *stack_b = init_stack();
 
-    if (!stack_a || !stack_b)
-    {
-        printf("Erreur d'initialisation des piles.\n");
-        return (1);
-    }
+    add_elem(stack_a, 1);
+    add_elem(stack_a, 2);
+    add_elem(stack_a, 3);
 
-    // Ajouter des éléments à stack_a
-    add_elem(stack_a, 62);
-    add_elem(stack_a, 73);
-
-    printf("Avant pb : stack_a->size = %d, stack_b->size = %d\n", stack_a->size, stack_b->size);
-    pb(stack_a, stack_b);
-    printf("Après pb : stack_a->size = %d, stack_b->size = %d\n", stack_a->size, stack_b->size);
+    printf("Avant push : stack_a->size = %d, stack_b->size = %d\n", stack_a->size, stack_b->size);
+    push(stack_a, stack_b);
+    printf("Après push : stack_a->size = %d, stack_b->size = %d\n", stack_a->size, stack_b->size);
+    push(stack_a, stack_b);
+    printf("Après 2ème push : stack_a->size = %d, stack_b->size = %d\n", stack_a->size, stack_b->size);
 
     free_stack(stack_a);
     free_stack(stack_b);
-
-    return (0);
+    return 0;
 } */

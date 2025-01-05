@@ -16,26 +16,22 @@ void	push(t_stack *src, t_stack *dest)
 {
 	t_node *move_node;
 	
+    printf("Avant push : src = %p, dest = %p\n", (void *)src, (void *)dest);
+    printf("src->size = %d, dest->size = %d\n", src->size, dest->size);
 	if (!src || !src->top)
 		return ;
-	move_node = src->top;
-    printf("Push : Déplacement de %d de src à dest\n", move_node->value);
-    printf("Avant push : src->top = %p, src->size = %d, dest->size = %d\n", src->top, src->size, dest->size);
-	src->top = src->top->next;
-	if (src->top)
-		src->top->prev = NULL;
-	src->size--;
-	move_node->next = dest->top;
-	if (dest->top)
+	move_node = pop(src);
+	if (!dest->top)
+		dest->top = move_node;
+	else
+	{
+		move_node->next = dest->top;
 		dest->top->prev = move_node;
-	dest->top = move_node;
-	dest->top->prev = NULL;
+		dest->top = move_node;
+	}
 	dest->size++;
-    if (src->size < 0 || dest->size < 0)
-    {
-        printf("Erreur : Taille invalide après le push. src->size = %d, dest->size = %d\n", src->size, dest->size);
-    }
-    printf("Après push : src->top = %p, src->size = %d, dest->top = %p, dest->size = %d\n", src->top, src->size, dest->top, dest->size);
+    printf("Après push : src->size = %d, dest->size = %d\n", src->size, dest->size);
+    printf("dest->top->value = %d\n", dest->top->value);
 }
 
 void	pa(t_stack *stack_b, t_stack *stack_a)
@@ -59,4 +55,4 @@ void	pb(t_stack *stack_a, t_stack *stack_b)
 	write(1, "pb\n", 3);
 	printf("Avant pb : stack_a->top = %d, stack_a->size = %d, stack_b->size = %d\n", stack_a->top->value, stack_a->size, stack_b->size);	push(stack_a, stack_b);
     printf("Après pb : stack_b->top = %d, stack_b->size = %d\n", stack_b->top->value, stack_b->size);
-}
+}	
