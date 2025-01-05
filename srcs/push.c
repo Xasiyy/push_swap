@@ -16,8 +16,6 @@ void	push(t_stack *src, t_stack *dest)
 {
 	t_node *move_node;
 	
-    printf("Avant push : src = %p, dest = %p\n", (void *)src, (void *)dest);
-    printf("src->size = %d, dest->size = %d\n", src->size, dest->size);
 	if (!src || !src->top)
 		return ;
 	move_node = pop(src);
@@ -29,9 +27,6 @@ void	push(t_stack *src, t_stack *dest)
 		dest->top->prev = move_node;
 		dest->top = move_node;
 	}
-	dest->size++;
-    printf("Après push : src->size = %d, dest->size = %d\n", src->size, dest->size);
-    printf("dest->top->value = %d\n", dest->top->value);
 }
 
 void	pa(t_stack *stack_b, t_stack *stack_a)
@@ -53,6 +48,5 @@ void	pb(t_stack *stack_a, t_stack *stack_b)
 		return ;
 	}
 	write(1, "pb\n", 3);
-	printf("Avant pb : stack_a->top = %d, stack_a->size = %d, stack_b->size = %d\n", stack_a->top->value, stack_a->size, stack_b->size);	push(stack_a, stack_b);
-    printf("Après pb : stack_b->top = %d, stack_b->size = %d\n", stack_b->top->value, stack_b->size);
+	push(stack_a, stack_b);
 }	

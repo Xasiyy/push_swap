@@ -26,7 +26,6 @@ typedef struct s_node{
 
 typedef struct s_stack{
 	t_node *top;
-	int size;
 }	t_stack;
 
 // test
@@ -38,7 +37,7 @@ t_stack *create_stack(int argc, char **argv);
 t_node *pop(t_stack *stack);
 void	add_elem(t_stack *stack, int value);
 void	remove_elem(t_stack *stack, int value);
-void	free_stack(t_stack *stack);
+void	free_stack(t_stack **stack);
 int		parsing(int argc, char **argv);
 void	push(t_stack *src, t_stack *dest);
 void	pa(t_stack *stack_b, t_stack *stack_a);
@@ -58,17 +57,7 @@ void	rrr(t_stack *stack_a, t_stack *stack_b);
 //algo
 int	find_min(t_stack *stack);
 int	find_max(t_stack *stack);
-int	find_pivot(t_stack *stack);
-int	stack_size(t_stack *stack);
-int	partition_stack(t_stack *a, t_stack *b, int pivot);
-void	quicksort(t_stack *a, t_stack *b);
-//void	restore_stack(t_stack *stack, int rotations);
 int	is_sorted(t_stack *stack);
-void	sort_three(t_stack *stack);
-void	bucket_sort(t_stack *stack_a, t_stack *stack_b, int bucket_count);
-//void	sort_stack(t_stack *stack_a, t_stack *stack_b);
-//void	radix_sort(t_stack *stack_a, t_stack *stack_b);
-//void radix_merge_sort(t_stack *stack_a, t_stack *stack_b);
 void	turkish_sort(t_stack *stack_a, t_stack*stack_b);
 
 #endif

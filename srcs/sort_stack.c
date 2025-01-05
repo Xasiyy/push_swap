@@ -16,15 +16,13 @@ t_stack *init_stack()
 {
 	t_stack *stack;
 	
-	stack = (t_stack *)malloc(sizeof(t_stack));
+	stack = malloc(sizeof(t_stack));
 	if (!stack)
 	{
 		perror("Erreur : Allocation de mémoire pour la pile échouée");	
 		return (NULL);
 	}
 	stack->top = NULL;
-	stack->size = 0;
-	printf("Nouvelle pile initialisée : top = %p, size = %d\n", stack->top, stack->size);
 	return (stack);
 }
 
@@ -51,7 +49,6 @@ void	add_elem(t_stack *stack, int value)
 		current->next = new_node;
 		new_node->prev = current;
 	}
-	stack->size++;
 }
 
 t_stack *create_stack(int argc, char **argv)
@@ -73,24 +70,23 @@ t_stack *create_stack(int argc, char **argv)
 	return (stack);
 }
 
-void	free_stack(t_stack *stack)
+void	free_stack(t_stack **stack)
 {
 	t_node *current;
 	t_node *next_node;
 
-	if (!stack)
+	if (!stack || !*stack)
 		return;
-	current = stack->top;
+	current = (*stack)->top;
 	while (current)
 	{
 		next_node = current->next;
 		free(current);
 		current = next_node;
 	}
-	stack->top = NULL;
-	stack->size = 0;
-	free(stack);
-	stack = NULL;
+	(*stack)->top = NULL;
+	free(*stack);
+	*stack = NULL;
 	printf("Pile libérée avec succès.\n");
 }
 
@@ -98,7 +94,6 @@ void	remove_elem(t_stack *stack, int value)
 {
 	t_node *current;
 	t_node *temp;
-	int real_size;
 	
 	if (!stack || !stack->top)
 		return ;
@@ -116,35 +111,23 @@ void	remove_elem(t_stack *stack, int value)
 			temp = current;
 			current = current->next;
 			free(temp);
-			stack->size--;
 			return ;
 		}
 		else
 			current = current->next;
 	}
-	real_size = 0;
-	current = stack->top;
-	while (current)
-	{
-		real_size++;
-		current = current->next;
-	}
-	if (real_size != stack->size)
-		stack->size = real_size;
 }
 
 t_node *pop(t_stack *stack)
 {
-	t_node *node_to_pop;
+	t_node *top_node;
 
 	if (!stack || !stack->top)
 		return (NULL);
-	node_to_pop = stack->top;
-	stack->top = stack->top->next;
+	top_node = stack->top;
+	stack->top = top_node->next;
 	if (stack->top)
 		stack->top->prev = NULL;
-	stack->size--;
-	node_to_pop->next = NULL;
-	node_to_pop->prev = NULL;
-	return (node_to_pop);
+	top_node->next = NULL;
+	return (top_node);
 }

@@ -22,7 +22,6 @@ void print_stack(t_stack *stack)
       printf("%d\n", current->value);
       current = current->next;
    }
-   printf("size: %d\n", stack->size);
 }
 
 void init_stack_with_values(t_stack *stack, int values[], int size)
@@ -66,6 +65,6 @@ void    test_operations(int argc, char **argv)
     print_stack(stack_b);
 
     // Free the stacks
-    free_stack(stack_a);
-    free_stack(stack_b);
+    free_stack(&stack_a);
+    free_stack(&stack_b);
 }
