@@ -32,10 +32,7 @@ void	push(t_stack *src, t_stack *dest)
 void	pa(t_stack *stack_b, t_stack *stack_a)
 {
 	if (!stack_b || !stack_b->top)
-	{
-		printf("vide\n");
 		return ;
-	}
 	write (1, "pa\n", 3);
 	push(stack_b, stack_a);
 }
@@ -43,10 +40,7 @@ void	pa(t_stack *stack_b, t_stack *stack_a)
 void	pb(t_stack *stack_a, t_stack *stack_b)
 {
 	if (!stack_a || !stack_a->top)
-	{
-        printf("Erreur : pb appelé sur une pile vide (stack_a).\n");    
 		return ;
-	}
 	write(1, "pb\n", 3);
 	push(stack_a, stack_b);
 }	

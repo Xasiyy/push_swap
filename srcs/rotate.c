@@ -27,7 +27,6 @@ void	rotate(t_stack *stack)
 	last->next = first;
 	first->prev = last;
 	first->next = NULL;
-	printf("rotation fait top = %d\n", stack->top->value);
 }
 
 void	ra(t_stack *stack_a)

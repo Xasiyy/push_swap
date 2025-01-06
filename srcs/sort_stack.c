@@ -87,7 +87,6 @@ void	free_stack(t_stack **stack)
 	(*stack)->top = NULL;
 	free(*stack);
 	*stack = NULL;
-	printf("Pile libérée avec succès.\n");
 }
 
 void	remove_elem(t_stack *stack, int value)
