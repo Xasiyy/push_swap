@@ -12,184 +12,212 @@
 
 #include "push_swap.h"
 
-int	find_median(t_stack *stack)
+int	stack_size(t_stack *stack)
 {
-	t_node	*current;
-	int		*values;
-	int		size;
-	int		median;
-	int		i;
-	int		j;
+	int	size;
+	t_node *current;
 
 	size = 0;
-	if (!stack || !stack->top)
-		return (0);
 	current = stack->top;
 	while (current)
 	{
 		size++;
 		current = current->next;
 	}
-	values = malloc(sizeof(int) * size);
-	if (!values)
-		return (0);
+	return (size);
+}
+int	find_max_index(t_stack *stack)
+{
+	t_node	*current;
+	int		max;
+	int		index;
+	int		max_index;
+
 	current = stack->top;
-	i = 0;
-	while (i < size)
+	max = current->value;
+	index = 0;
+	max_index = 0;
+	while (current)
 	{
-		values[i] = current->value;
+		if (current->value > max)
+		{
+			max = current->value;
+			max_index = index;
+		}
 		current = current->next;
-		i++;
+		index++;
 	}
+	return (max_index);
+}
+
+void	rotate_to_top(t_stack *stack, int index)
+{
+	int	size;
+
+	size = stack_size(stack);
+    if (index < 0 || index >= size)
+        return;
+    if (index <= size / 2)
+    {
+        while (index-- > 0)
+            ra(stack);
+    }
+    else
+    {
+        index = size - index;
+        while (index-- > 0)
+            rra(stack);
+    }
+}
+
+void	sort_values(int *values, int size)
+{
+	int	i;
+	int	j;
+	int	temp;
+
 	i = 0;
 	while (i < size - 1)
 	{
-		int min_idx = i;
-		j = i + 1;
-		while (j < size)
+		j = 0;
+		while (j < size - i - 1)
 		{
-			if (values[j] < values[min_idx])
-				min_idx = j;
+			if (values[j] > values[j + 1])
+			{
+				temp = values[j];
+				values[j] = values[j + 1];
+				values[j + 1] = temp;
+			}
 			j++;
 		}
-		int temp = values[i];
-		values[i] = values[min_idx];
-		values[min_idx] = temp;
-	}
-	median = values[size / 2];
-	free(values);
-	return (median);
-}
-
-int compare_int(const void *a, const void *b)
-{
-	return (*(int *)a - *(int *)b);
-}
-
-void	split_stack(t_stack *stack_a, t_stack *stack_b)
-{
-	int median;
-	int size;
-	int i;
-
-	i = 0;
-	if (!stack_a || !stack_b || !stack_a->top)
-		return ;
-	median = find_median(stack_a);
-	size = stack_size(stack_a);
-	while (i < size)
-	{
-		if (stack_a->top->value < median)
-			pb(stack_a, stack_b);
-		else
-			ra(stack_a);
 		i++;
 	}
 }
 
-void	sort_subset(t_stack *stack)
+int	*get_sorted_values(t_stack *stack)
 {
-	t_stack *sorted;
-	int min_value;
+	t_node *current;
+	int		*values;
+	int		size;
+	int		i;
 
-	if (!stack || !stack->top || is_sorted(stack))
-		return ;
-	sorted = init_stack();
-	if (!stack || !stack->top)
-		return;
+	size = stack_size(stack);
+	if (size <= 0)
+		return (NULL);
 
-	while (stack->top)
+	values = malloc(sizeof(int) * size);
+	if (!values)
+		return (NULL);
+	current = stack->top;
+	i = 0;
+	while (current)
 	{
-		min_value = find_min(stack);
-		while (stack->top && stack->top->value != min_value)
-		{
-			if (stack->top->value > min_value && stack->top->next->value == min_value)
-				sa(stack);
-			else
-				ra(stack);
-		}
-		if (stack->top)
-			pb(stack, sorted);
+		values[i++] = current->value;
+		current = current->next;
 	}
+	sort_values(values, size);
+	return (values);
+}
 
-	while (sorted->top)
-		pa(sorted, stack);
+void	split_stack(t_stack *stack_a, t_stack *stack_b, int num_chunks)
+{
+	int *sorted_value;
+	int	chunk_size;
+	int	i;
+	int count;
 
-	free_stack(&sorted);
+	if (!stack_a || !stack_a->top)
+		return ;
+	sorted_value = get_sorted_values(stack_a);
+	if (!sorted_value)
+		return;
+	chunk_size = (stack_size(stack_a) + num_chunks - 1) / num_chunks;
+	i = 0;
+	while (stack_a->top)
+	{
+		if (i < num_chunks && stack_a->top->value <= sorted_value[chunk_size * (i + 1) - 1])
+		{
+			pb(stack_a, stack_b);
+			if (stack_b->top->value <= sorted_value[chunk_size * i])
+				rb(stack_b);
+			count = 0;
+		}
+		else
+		{
+			ra(stack_a);
+			count++;
+		}	
+		if (count >= stack_size(stack_a))
+			break;
+		if (stack_size(stack_b) >= chunk_size * (i + 1))
+			i++;
+	}
+	free(sorted_value);
 }
 
 void	merge_stacks(t_stack *stack_a, t_stack *stack_b)
 {
-	t_stack *result;
+	int	max_index;
 
-	if (!stack_a || !stack_b)
+	if (!stack_b || !stack_b->top)
 		return;
-	if (is_sorted(stack_b) && !stack_a->top)
+	while (stack_b->top)
 	{
-		while (stack_b->top)
-			pa(stack_b, stack_a);
-		return ;
+		max_index = find_max_index(stack_b);
+		rotate_to_top(stack_b, max_index);
+		pa(stack_b, stack_a);
 	}
-	result = init_stack();
-	while (stack_a->top || stack_b->top)
-	{
-		if (!stack_a->top)
-		{
-			pa(stack_b, result);
-		}
-		else if (!stack_b->top)
-		{
-			pa(stack_a, result);
-		}
-		else if (stack_a->top->value <= stack_b->top->value)
-		{
-			pa(stack_a, result);
-		}
-		else
-		{
-			pa(stack_b, result);
-		}
-	}
-	while (result->top)
-		pa(result, stack_a);
-	free_stack(&result);
 }
 
-void	turkish_algo(t_stack *stack_a, t_stack *stack_b)
-{
-	int i;
-	int half;
-	t_node *current;
+int	find_chunks(int	stack_size)
 
-	half = 0;
-	i = 0;
-	current = stack_a->top;
-	if (!stack_a || !stack_b || !stack_a->top || !stack_a->top->next)
-		return ;
-	if (is_sorted(stack_a))
-		return ;
-	while (current)
-	{
-		half++;
-		current = current->next;
-	}
-	half /= 2;
-	while (i++ < half && stack_a->top)
-	{
-		pb(stack_a, stack_b);
-		i++;
-	}
-	sort_subset(stack_a);
-	sort_subset(stack_b);
-	merge_stacks(stack_a, stack_b);
+{
+	if (stack_size <= 10)
+        return 2;
+    else if (stack_size <= 100)
+        return 7;
+    else if (stack_size <= 500)
+        return 15;
+    else
+        return 30;
+}
+
+void sort_three(t_stack *stack)
+{
+    int top = stack->top->value;
+    int middle = stack->top->next->value;
+    int bottom = stack->top->next->next->value;
+
+    if (top > middle && middle > bottom)
+    {
+        sa(stack);
+        rra(stack);
+    }
+    else if (top > bottom && bottom > middle)
+        ra(stack);
+    else if (middle > bottom && bottom > top)
+    {
+        sa(stack);
+        ra(stack);
+    }
+    else if (middle > top && top > bottom)
+        rra(stack);
+    else if (bottom > top && top > middle)
+        sa(stack);
 }
 
 void	turkish_sort(t_stack *stack_a, t_stack *stack_b)
 {
-	if (!stack_a || !stack_b || !stack_a->top || !stack_a->top->next)
-		return ; 
-	split_stack(stack_a, stack_b);
-	sort_stack(stack_a);
-	sort_subset(stack_b);
+	int	num_chunks;
+
+	if (is_sorted(stack_a) || stack_size(stack_a) <= 1)
+		return ;
+	if (stack_size(stack_a) <= 3)
+	{
+		sort_three(stack_a);
+		return ;
+	}
+	num_chunks = find_chunks(stack_size(stack_a));
+	split_stack(stack_a, stack_b, num_chunks);
 	merge_stacks(stack_a, stack_b);
 }
