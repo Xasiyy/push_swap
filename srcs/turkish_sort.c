@@ -133,6 +133,7 @@ void	split_stack(t_stack *stack_a, t_stack *stack_b, int num_chunks)
 		return;
 	chunk_size = (stack_size(stack_a) + num_chunks - 1) / num_chunks;
 	i = 0;
+	count = 0;
 	while (stack_a->top)
 	{
 		if (i < num_chunks && stack_a->top->value <= sorted_value[chunk_size * (i + 1) - 1])
@@ -205,6 +206,7 @@ void sort_three(t_stack *stack)
     else if (bottom > top && top > middle)
         sa(stack);
 }
+
 
 void	turkish_sort(t_stack *stack_a, t_stack *stack_b)
 {
