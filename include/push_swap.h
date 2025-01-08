@@ -30,8 +30,6 @@ typedef struct s_stack{
 
 // test
 void	print_stack(t_stack *stack);
-void test_operations(int argc, char **argv);
-//t_stack *push_swap(t_stack *stack);
 t_stack *init_stack();
 t_stack *create_stack(int argc, char **argv);
 t_node *pop(t_stack *stack);
@@ -58,6 +56,6 @@ void	rrr(t_stack *stack_a, t_stack *stack_b);
 int	find_min(t_stack *stack);
 int	find_max(t_stack *stack);
 int	is_sorted(t_stack *stack);
-void	turkish_sort(t_stack *stack_a, t_stack*stack_b);
+void	turkish_sort(t_stack *stack_a, t_stack *stack_b);
 
 #endif
