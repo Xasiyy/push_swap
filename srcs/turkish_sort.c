@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	calculate_insert_pos(t_stack *stack_b, int value)
+/* int	calculate_insert_pos(t_stack *stack_b, int value)
 {
 	int	operations;
 	t_node *current;
@@ -37,8 +37,6 @@ int	calculate_insert_pos(t_stack *stack_b, int value)
 		current = current->next;
 		operations++;
 	}
-	if (!current->next)
-		operations++;
 	return (operations);
 }
 
@@ -61,6 +59,28 @@ int	calcul_sorts(t_stack *stack_a, t_stack *stack_b, int value)
 	if (cost_b > stack_size(stack_b) / 2)
 		cost_b = stack_size(stack_b) - cost_b;
 	return (cost_a + cost_b);
+}
+
+void	insert_to_a(t_stack *stack_a, t_stack *stack_b)
+{
+	int pos;
+
+	while (stack_b->top)
+	{
+		pos = calculate_insert_pos(stack_a, stack_b->top->value);
+		if (pos <= stack_size(stack_a) / 2)
+		{
+			while (pos--)
+				ra(stack_a);
+		}
+		else
+		{
+			pos = stack_size(stack_a) - pos;
+			while (pos--)
+				rra(stack_a);
+		}
+		pa(stack_b, stack_a);
+	}
 }
 
 void	finalize_sort(t_stack *stack_a)
@@ -92,23 +112,34 @@ void	finalize_sort(t_stack *stack_a)
 	}
 }
 
-int	find_position(t_stack *stack, int value)
+
+void	sort_stack_b(t_stack *stack_b)
 {
-	t_node	*current;
-	int		position;
+	int	max_value;
+	int	rotations;
+	t_node *current;
 
-	current = stack->top;
-	position = 0;
-
-	while (current)
+	if (!stack_b->top || !stack_b->top->next)
+		return ;
+	max_value = find_max(stack_b);
+	rotations = 0;
+	current = stack_b->top;
+	while (current && current->value != max_value)
 	{
-		if (current->value == value)
-			return (position);
 		current = current->next;
-		position++;
+		rotations++;
 	}
-
-	return (-1);
+	if (rotations <= stack_size(stack_b) / 2)
+	{
+		while (rotations--)
+			rb(stack_b);
+	}
+	else
+	{
+		rotations = stack_size(stack_b) - rotations;
+		while (rotations--)
+			rrb(stack_b);
+	}
 }
 
 void	turkish_sort(t_stack *stack_a, t_stack *stack_b)
@@ -117,7 +148,6 @@ void	turkish_sort(t_stack *stack_a, t_stack *stack_b)
 	int	best_value;
 	t_node *current;
 	int	operations;
-	int pos;
 
 	while (stack_size(stack_a) > 3)
 	{
@@ -144,21 +174,97 @@ void	turkish_sort(t_stack *stack_a, t_stack *stack_b)
 		pb(stack_a, stack_b);
 	}
 		sort_three(stack_a);
-		while (stack_b->top)
-		{
-			pos = calculate_insert_pos(stack_a, stack_b->top->value);
-			if (pos <= stack_size(stack_a) / 2)
-			{
-				while (pos--)
-					ra(stack_a);
-			}
-			else
-			{
-				pos = stack_size(stack_a) - pos;
-				while (pos--)
-					rra(stack_a);
-			}
-			pa(stack_b, stack_a);
-		}
+		insert_to_a(stack_a, stack_b);
 		finalize_sort(stack_a);
+} */
+
+int	find_position(t_stack *stack, int value)
+{
+	t_node	*current;
+	int		position;
+
+	current = stack->top;
+	position = 0;
+
+	while (current)
+	{
+		if (current->value == value)
+			return (position);
+		current = current->next;
+		position++;
+	}
+
+	return (-1);
+}
+
+void	push_smallest_to_b(t_stack *stack_a, t_stack *stack_b)
+{
+	int	min_value;
+	int	position;
+
+	while (stack_size(stack_a) > 3)
+	{
+		min_value = find_min(stack_a);
+		position = find_position(stack_a, min_value);
+		if (position <= stack_size(stack_a) / 2)
+		{
+			while (position--)
+				ra(stack_a);
+		}
+		else
+		{
+			position = stack_size(stack_a) - position;
+			while (position--)
+				rra(stack_a);
+		}
+		pb(stack_a, stack_b);
+	}
+}
+
+int	is_sorted_desc(t_stack *stack)
+{
+	t_node *current;
+	
+	if (!stack->top || !stack->top->next)
+		return (1);
+	current = stack->top;
+	while (current->next)
+	{
+		if (current->value < current->next->value)
+			return (0);
+		current = current->next;
+	}
+	return (1);
+}
+
+void	sort_stack_b_descending(t_stack *stack_b)
+{
+	int	max_value;
+	int	rotations;
+
+	while (!is_sorted_desc(stack_b))
+	{
+		max_value = find_max(stack_b);
+		rotations = find_position(stack_b, max_value);
+		if (rotations <= stack_size(stack_b) / 2)
+		{
+			while (rotations--)
+				rb(stack_b);
+		}
+		else
+		{
+			rotations = stack_size(stack_b) - rotations;
+			while (rotations--)
+				rrb(stack_b);
+		}
+	}
+}
+
+void	turkish_sort(t_stack *stack_a, t_stack *stack_b)
+{
+	push_smallest_to_b(stack_a, stack_b);
+	sort_three(stack_a);
+	sort_stack_b_descending(stack_b);
+	while (stack_b->top)
+		pa(stack_b, stack_a);
 }
