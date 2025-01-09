@@ -34,6 +34,7 @@ t_stack *init_stack();
 t_stack *create_stack(int argc, char **argv);
 t_node *pop(t_stack *stack);
 void	add_elem(t_stack *stack, int value);
+int	stack_size(t_stack *stack);
 void	remove_elem(t_stack *stack, int value);
 void	free_stack(t_stack **stack);
 int		parsing(int argc, char **argv);
@@ -56,6 +57,7 @@ void	rrr(t_stack *stack_a, t_stack *stack_b);
 int	find_min(t_stack *stack);
 int	find_max(t_stack *stack);
 int	is_sorted(t_stack *stack);
+void sort_three(t_stack *stack);
 void	turkish_sort(t_stack *stack_a, t_stack *stack_b);
 
 #endif

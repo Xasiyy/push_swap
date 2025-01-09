@@ -130,3 +130,49 @@ t_node *pop(t_stack *stack)
 	top_node->next = NULL;
 	return (top_node);
 }
+
+int	stack_size(t_stack *stack)
+{
+	t_node *current;
+	int size;
+
+	size = 0;
+	current = stack->top;
+	while (current)
+	{
+		size++;
+		current = current->next;
+	}
+	return (size);
+}
+
+void sort_three(t_stack *stack)
+{
+    int first;
+    int second;
+    int third;
+
+    if (stack_size(stack) != 3)
+        return;
+
+    first = stack->top->value;
+    second = stack->top->next->value;
+    third = stack->top->next->next->value;
+
+    if (first > second && second < third && first < third)
+        sa(stack);
+    else if (first > second && second > third && first > third)
+    {
+        sa(stack);
+        rra(stack);
+    }
+    else if (first > second && second < third && first > third)
+        ra(stack);
+    else if (first < second && second > third && first < third)
+    {
+        sa(stack);
+        ra(stack);
+    }
+    else if (first < second && second > third && first > third)
+        rra(stack);
+}
