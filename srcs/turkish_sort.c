@@ -80,14 +80,14 @@ void align_stack_a(t_stack *stack_a, int position)
     }
 }
 
-int calculate_insert_pos(t_stack *stack_a, int value)
+int calculate_insert_pos(t_stack *stack_b, int value)
 {
-    t_node *current = stack_a->top;
+    t_node *current = stack_b->top;
     int position = 0;
 
-    if (!current || value < find_min(stack_a) || value > find_max(stack_a))
+    if (!current || value > find_min(stack_b) || value < find_max(stack_b))
     {
-        while (current && current->value != find_min(stack_a))
+        while (current && current->value != find_min(stack_b))
         {
             current = current->next;
             position++;
@@ -96,7 +96,7 @@ int calculate_insert_pos(t_stack *stack_a, int value)
     }
     while (current->next)
     {
-        if (current->value < value && current->next->value > value)
+        if (current->value > value && current->next->value < value)
             break;
         current = current->next;
         position++;
@@ -186,15 +186,12 @@ void turkish_sort(t_stack *stack_a, t_stack *stack_b)
         align_stacks(stack_a, stack_b, pos_a, pos_b);
         pb(stack_a, stack_b);
     }
-
-    sort_three(stack_a);
-
-    while (stack_b->top)
-    {
-        int pos_a = calculate_insert_pos(stack_a, stack_b->top->value);
-        align_stack_a(stack_a, pos_a);
-        pa(stack_b, stack_a);
-    }
-
-    finalize_sort(stack_a);
+	sort_three(stack_a);
+	while (stack_size(stack_b) > 0)
+	{
+		int pos_a = calculate_insert_pos(stack_a, stack_b->top->value);
+		align_stack_a(stack_a, pos_a);
+		pa(stack_b, stack_a);
+	}
+	finalize_sort(stack_a);
 }
