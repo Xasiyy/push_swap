@@ -35,8 +35,6 @@ void finalize_sort(t_stack *stack_a)
     int min_value = find_min(stack_a);
     int rotations = find_position(stack_a, min_value);
 
-    printf("Min value: %d, Rotations needed: %d\n", min_value, rotations);
-
     if (rotations == -1)
     {
         fprintf(stderr, "Erreur : impossible de trouver la valeur minimale dans la pile\n");
@@ -63,6 +61,7 @@ void finalize_sort(t_stack *stack_a)
 }
 
 
+
 void align_stack_a(t_stack *stack_a, int position)
 {
     int size = stack_size(stack_a);
@@ -80,23 +79,24 @@ void align_stack_a(t_stack *stack_a, int position)
     }
 }
 
-int calculate_insert_pos(t_stack *stack_b, int value)
+int calculate_insert_pos(t_stack *stack_a, int value)
 {
-    t_node *current = stack_b->top;
+    t_node *current = stack_a->top;
     int position = 0;
 
-    if (!current || value > find_min(stack_b) || value < find_max(stack_b))
+    if (!current || value < find_min(stack_a) || value > find_max(stack_a))
     {
-        while (current && current->value != find_min(stack_b))
+        while (current && current->value != find_min(stack_a))
         {
             current = current->next;
             position++;
         }
         return position;
     }
+
     while (current->next)
     {
-        if (current->value > value && current->next->value < value)
+        if (current->value < value && current->next->value > value)
             break;
         current = current->next;
         position++;
@@ -126,7 +126,6 @@ int calcul_sorts(t_stack *stack_a, t_stack *stack_b, int value)
         return (abs(cost_a) + abs(cost_b));
 
 }
-
 
 void align_stacks(t_stack *stack_a, t_stack *stack_b, int pos_a, int pos_b)
 {
@@ -163,35 +162,27 @@ void align_stacks(t_stack *stack_a, t_stack *stack_b, int pos_a, int pos_b)
         pos_b++;
     }
 }
+
 void turkish_sort(t_stack *stack_a, t_stack *stack_b)
 {
+
     while (stack_size(stack_a) > 3)
     {
-        int best_value = 0;
-        int best_cost = -1;
-        t_node *current = stack_a->top;
-
-        while (current)
-        {
-            int current_cost = calcul_sorts(stack_a, stack_b, current->value);
-            if (best_cost == -1 || current_cost < best_cost)
-            {
-                best_cost = current_cost;
-                best_value = current->value;
-            }
-            current = current->next;
-        }
-		int pos_a = find_position(stack_a, best_value);
-		int pos_b = calculate_insert_pos(stack_b, best_value);
+        int best_value = stack_a->top->value;
+        int pos_a = find_position(stack_a, best_value);
+        int pos_b = calculate_insert_pos(stack_b, best_value);
+        
         align_stacks(stack_a, stack_b, pos_a, pos_b);
         pb(stack_a, stack_b);
     }
 	sort_three(stack_a);
-	while (stack_size(stack_b) > 0)
-	{
-		int pos_a = calculate_insert_pos(stack_a, stack_b->top->value);
-		align_stack_a(stack_a, pos_a);
-		pa(stack_b, stack_a);
-	}
+    while (stack_size(stack_b) > 0)
+    {
+        int value = stack_b->top->value;
+        int pos_a = calculate_insert_pos(stack_a, value);
+
+        align_stack_a(stack_a, pos_a);
+        pa(stack_b, stack_a);
+    }
 	finalize_sort(stack_a);
 }
