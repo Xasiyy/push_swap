@@ -35,6 +35,7 @@ void	pa(t_stack *stack_b, t_stack *stack_a)
 		return ;
 	write (1, "pa\n", 3);
 	push(stack_b, stack_a);
+	count++;
 }
 
 void	pb(t_stack *stack_a, t_stack *stack_b)
@@ -43,4 +44,5 @@ void	pb(t_stack *stack_a, t_stack *stack_b)
 		return ;
 	write(1, "pb\n", 3);
 	push(stack_a, stack_b);
+	count++;
 }	

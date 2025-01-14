@@ -28,6 +28,8 @@ typedef struct s_stack{
 	t_node *top;
 }	t_stack;
 
+extern int count;
+
 // test
 void	print_stack(t_stack *stack);
 t_stack *init_stack();

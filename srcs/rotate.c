@@ -35,6 +35,7 @@ void	ra(t_stack *stack_a)
         return;
 	write (1, "ra\n", 3);
 	rotate (stack_a);
+	count++;
 }
 
 void	rb(t_stack  *stack_b)
@@ -43,6 +44,7 @@ void	rb(t_stack  *stack_b)
 		return ;
 	write (1, "rb\n", 3);
 	rotate (stack_b);
+	count++;
 }
 
 void	rr(t_stack *stack_a, t_stack *stack_b)
@@ -55,4 +57,5 @@ void	rr(t_stack *stack_a, t_stack *stack_b)
 		rotate (stack_a);
 	if (stack_b && stack_b->top && stack_b->top->next)
 		rotate (stack_b);
+	count++;
 }

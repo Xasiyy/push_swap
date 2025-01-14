@@ -39,6 +39,7 @@ void	rra(t_stack *stack_a)
         return;
 	write (1, "rra\n", 4);
 	reverse(stack_a);
+	count++;
 }
 
 void	rrb(t_stack *stack_b)
@@ -47,6 +48,7 @@ void	rrb(t_stack *stack_b)
 		return ;
 	write (1, "rrb\n", 4);
 	reverse(stack_b);
+	count++;
 }
 
 void	rrr(t_stack *stack_a, t_stack *stack_b)
@@ -56,4 +58,5 @@ void	rrr(t_stack *stack_a, t_stack *stack_b)
 	write (1, "rrr\n", 4);
 	reverse(stack_a);	
 	reverse(stack_b);
+	count++;
 }
