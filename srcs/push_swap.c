@@ -31,7 +31,6 @@ void insert_in_order(t_stack *stack_a, t_node *node)
     current->next = node;
 }
 
-
 void insert_in_sorted_order(t_stack *stack_a, t_node *node)
 {
     t_node *current = stack_a->top;
@@ -71,42 +70,15 @@ void min_on_top(t_stack *stack)
 
 void move_a_to_b(t_stack *stack_a, t_stack *stack_b)
 {
-    t_node *current;
-    int size = stack_size(stack_a);
-
-    if (size <= 3)
-        return;
-    printf("Moving elements from A to B, stack size: %d\n", size);
-    while (stack_size(stack_a) > 3)
-    {
-	    current = stack_a->top;
-        printf("Current A value: %d, Max A value: %d\n", current->value, find_max(stack_a)->value);
-        if (current->value == find_max(stack_a)->value)
-        {
-            ra(stack_a);
-        }
-        else
-        {
-            pb(stack_a, stack_b);
-			if (stack_b->top->next && stack_b->top->value < stack_b->top->next->value)
-				rb(stack_b);
-        }
-    }
+	while (stack_size(stack_a) >  3)
+		push_to_sorted_b(stack_a, stack_b);
 }
 
 void move_b_to_a(t_stack *stack_a, t_stack *stack_b)
 {
     while (stack_size(stack_b) > 0)
     {
-        t_node *cheapest = get_cheapest(stack_b);
-        move_to_top(stack_b, cheapest);
-        printf("Moving cheapest node to A, value: %d\n", cheapest->value);
-        push_elem_b(stack_a, stack_b);
-        if (!is_sorted(stack_a)) 
-        {
-            printf("Stack A is not sorted. Adjusting...\n");
-            min_on_top(stack_a);
-        }
+        pa(stack_b, stack_a);
     }
 }
 
@@ -116,13 +88,7 @@ void sort_stacks(t_stack *stack_a, t_stack *stack_b)
         return;
 
     move_a_to_b(stack_a, stack_b);
-    sort_three(stack_a);           // Trier les 3 éléments restants
-    move_b_to_a(stack_a, stack_b); // Déplacer les éléments de B vers A
-
-    // Vérifier si la pile A est toujours triée, et trier si nécessaire
-    if (!is_sorted(stack_a))
-    {
-        printf("Stack A is still not sorted. Sorting...\n");
-        min_on_top(stack_a);
-    }
+    sort_three(stack_a);
+    move_b_to_a(stack_a, stack_b);
 }
+

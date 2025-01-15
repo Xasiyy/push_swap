@@ -87,4 +87,6 @@ void init_nodes_b(t_stack *a, t_stack *b);
 void prep_for_push(t_stack *stack, t_node *top_node, char stack_name);
 void insert_in_sorted_order(t_stack *stack_a, t_node *node);
 void	adjust_stack_a(t_stack *stack_a);
+void	push_to_sorted_b(t_stack *stack_a, t_stack *stack_b);
+
 #endif

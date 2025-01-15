@@ -11,6 +11,28 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
+void	push_to_sorted_b(t_stack *stack_a, t_stack *stack_b)
+{
+	t_node *node_to_push;
+	t_node *current;
+	t_node *tmp;
+
+	node_to_push = stack_a->top;
+	if (!stack_b->top || node_to_push->value > stack_b->top->value)
+		pb(stack_a, stack_b);
+	else
+	{
+		current = stack_b->top;
+		while (current->next && current->next->value > node_to_push->value)
+			current = current->next;
+		tmp = current->next;
+		pb(stack_a, stack_b);
+		stack_b->top->next = tmp;
+		current->next = stack_b->top;
+		stack_b->top = current->next;
+	}
+}
+
 void current_index(t_stack *stack)
 {
     int i = 0;
