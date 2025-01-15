@@ -76,10 +76,10 @@ void move_a_to_b(t_stack *stack_a, t_stack *stack_b)
 
     if (size <= 3)
         return;
-    current = stack_a->top;
     printf("Moving elements from A to B, stack size: %d\n", size);
     while (stack_size(stack_a) > 3)
     {
+	    current = stack_a->top;
         printf("Current A value: %d, Max A value: %d\n", current->value, find_max(stack_a)->value);
         if (current->value == find_max(stack_a)->value)
         {
@@ -88,8 +88,9 @@ void move_a_to_b(t_stack *stack_a, t_stack *stack_b)
         else
         {
             pb(stack_a, stack_b);
+			if (stack_b->top->next && stack_b->top->value < stack_b->top->next->value)
+				rb(stack_b);
         }
-        current = stack_a->top;
     }
 }
 
