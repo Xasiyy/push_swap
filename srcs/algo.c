@@ -33,41 +33,40 @@ void	insertion_sort(int *arr, int n)
 	}
 }
 
-int	find_min(t_stack *stack)
+t_node *find_min(t_stack *stack)
 {
-	int min;
-	t_node *current;
+    t_node *current = stack->top;
+    t_node *min_node = NULL;
 
-	if(!stack || !stack->top)
-		return (-1);
-	min = stack->top->value;
-	current = stack->top->next;
-	
-	while (current)
-	{
-		if (current->value < min)
-			min = current->value;
-		current = current->next;
-	}
-	return (min);
+    if (!stack || !stack->top)
+        return NULL;
+
+    min_node = current;
+    while (current)
+    {
+        if (current->value < min_node->value)
+            min_node = current;
+        current = current->next;
+    }
+    return min_node;
 }
 
-int	find_max(t_stack *stack)
+t_node *find_max(t_stack *stack)
 {
-	int max;
-	t_node *current;
-	
-	if (!stack || !stack->top)
-		return (-1);
-	max = stack->top->value;
-	current = stack->top->next;
-	while (current)
-	{
-		if (current->value > max)
-			max = current->value;
-		current = current->next;
-	}
-	return (max);
+    t_node *current = stack->top;
+    t_node *max_node = NULL;
+    
+    if (!stack || !stack->top)
+        return NULL;
+
+    max_node = current;
+    while (current)
+    {
+        if (current->value > max_node->value)
+            max_node = current;
+        current = current->next;
+    }
+    return max_node;
 }
 
 int	is_sorted(t_stack *stack)

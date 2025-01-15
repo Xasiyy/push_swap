@@ -9,180 +9,269 @@
 /*   Updated: 2025/01/08 14:26:45 by asdiallo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "push_swap.h"
 
-int	find_position(t_stack *stack, int value)
+void current_index(t_stack *stack)
 {
-	t_node	*current;
-	int		position;
+    int i = 0;
+    int median;
+    t_node *current = stack->top;
 
-	current = stack->top;
-	position = 0;
-
-	while (current)
-	{
-		if (current->value == value)
-			return (position);
-		current = current->next;
-		position++;
-	}
-	return (-1);
-}
-
-void finalize_sort(t_stack *stack_a)
-{
-    int min_value = find_min(stack_a);
-    int rotations = find_position(stack_a, min_value);
-
-    if (rotations == -1)
-    {
-        fprintf(stderr, "Erreur : impossible de trouver la valeur minimale dans la pile\n");
+    if (!stack || !stack->top)
         return;
-    }
-
-    if (rotations <= stack_size(stack_a) / 2)
-    {
-        while (rotations--)
-            ra(stack_a);
-    }
-    else
-    {
-        rotations = stack_size(stack_a) - rotations;
-        while (rotations--)
-            rra(stack_a);
-    }
-
-    if (!is_sorted(stack_a))
-    {
-        fprintf(stderr, "Erreur : la pile A n'est pas triée après finalize_sort\n");
-        print_stack(stack_a);
+    median = stack_size(stack) / 2;
+    printf("Calculating current indices with median: %d\n", median);
+    while (current) {
+        current->index = i;
+        if (i <= median)
+            current->above_median = true;
+        else
+            current->above_median = false;
+        printf("Node value: %d, Index: %d, Above median: %s\n", current->value, current->index, current->above_median ? "true" : "false");
+        current = current->next;
+        ++i;
     }
 }
 
-
-
-void align_stack_a(t_stack *stack_a, int position)
+void push_elem_b(t_stack *stack_a, t_stack *stack_b)
 {
-    int size = stack_size(stack_a);
-
-    if (position <= size / 2)
-    {
-        while (position--)
-            ra(stack_a);
-    }
-    else
-    {
-        position = size - position;
-        while (position--)
-            rra(stack_a);
-    }
-}
-
-int calculate_insert_pos(t_stack *stack_a, int value)
-{
+    int value_b = stack_b->top->value;
     t_node *current = stack_a->top;
-    int position = 0;
 
-    if (!current || value < find_min(stack_a) || value > find_max(stack_a))
+    while (current && current->next && current->value < value_b)
+        current = current->next;
+
+    while (stack_a->top != current)
     {
-        while (current && current->value != find_min(stack_a))
-        {
-            current = current->next;
-            position++;
-        }
-        return position;
+        if (current->above_median)
+            ra(stack_a);
+        else
+            rra(stack_a);
     }
+    pa(stack_b, stack_a);
+}
 
-    while (current->next)
+
+void move_to_top(t_stack *stack, t_node *node)
+{
+    int steps = 0;
+    t_node *current = stack->top;
+    while (current)
     {
-        if (current->value < value && current->next->value > value)
+        if (current == node)
             break;
         current = current->next;
-        position++;
+        steps++;
     }
-
-    return position + 1;
-}
-
-int max(int a, int b)
-{
-    return (a > b ? a : b);
-}
-
-int calcul_sorts(t_stack *stack_a, t_stack *stack_b, int value)
-{
-    int cost_a = find_position(stack_a, value);
-    int cost_b = calculate_insert_pos(stack_b, value);
-
-    if (cost_a > stack_size(stack_a) / 2)
-        cost_a = cost_a - stack_size(stack_a);
-    if (cost_b > stack_size(stack_b) / 2)
-        cost_b = cost_b - stack_size(stack_b);
-
-    if ((cost_a > 0 && cost_b > 0) || (cost_a < 0 && cost_b < 0))
-        return (max(abs(cost_a), abs(cost_b)));
+    if (steps <= stack_size(stack) / 2)
+    {
+        while (steps--)
+            ra(stack);
+    }
     else
-        return (abs(cost_a) + abs(cost_b));
-
-}
-
-void align_stacks(t_stack *stack_a, t_stack *stack_b, int pos_a, int pos_b)
-{
-    while (pos_a > 0 && pos_b > 0)
     {
-        rr(stack_a, stack_b);
-        pos_a--;
-        pos_b--;
-    }
-    while (pos_a < 0 && pos_b < 0)
-    {
-        rrr(stack_a, stack_b);
-        pos_a++;
-        pos_b++;
-    }
-    while (pos_a > 0)
-    {
-        ra(stack_a);
-        pos_a--;
-    }
-    while (pos_a < 0)
-    {
-        rra(stack_a);
-        pos_a++;
-    }
-    while (pos_b > 0)
-    {
-        rb(stack_b);
-        pos_b--;
-    }
-    while (pos_b < 0)
-    {
-        rrb(stack_b);
-        pos_b++;
+        steps = stack_size(stack) - steps;
+        while (steps--)
+            rra(stack);
     }
 }
 
-void turkish_sort(t_stack *stack_a, t_stack *stack_b)
+t_node *get_cheapest(t_stack *stack)
 {
+    t_node *current = stack->top;
+    t_node *cheapest = NULL;
+    long cheapest_cost = LONG_MAX;
 
-    while (stack_size(stack_a) > 3)
+    while (current)
     {
-        int best_value = stack_a->top->value;
-        int pos_a = find_position(stack_a, best_value);
-        int pos_b = calculate_insert_pos(stack_b, best_value);
+        if (current->push_cost < cheapest_cost)
+        {
+            cheapest_cost = current->push_cost;
+            cheapest = current;
+        }
+        current = current->next;
+    }
+    return cheapest;
+}
+
+
+void indices_median(t_stack *stack)
+{
+	t_node *current;
+	int size;
+	int i;
+	int median;
+
+	if (!stack || !stack->top)
+		return ;
+	size = stack_size(stack);
+	median = size / 2;
+	current = stack->top;
+	i = 0;
+	while (current)
+	{
+		current->index = 1;
+		if (i <= median)
+			current->above_median = true;
+		else
+			current->above_median = false;
+		current = current->next;
+		i++;
+	}
+}
+
+void set_target_a(t_stack *stack_a, t_stack *stack_b)
+{
+    t_node *current_a;
+    t_node *current_b;
+    t_node *target_node;
+    int diff;
+    int min_diff;
+
+    target_node = NULL;
+    if (!stack_a || !stack_b)
+        return;
+
+    current_a = stack_a->top;
+    while (current_a)
+    {
+        current_b = stack_b->top;
+        min_diff = INT_MAX;
+        target_node = NULL;
+
+        printf("Setting target for node A with value: %d\n", current_a->value);
+        while (current_b)
+        {
+            diff = current_b->value - current_a->value;
+            printf("  Comparing with node B, value: %d, diff: %d\n", current_b->value, diff);
+            if (diff > 0 && diff < min_diff)
+            {
+                min_diff = diff;
+                target_node = current_b;
+            }
+            current_b = current_b->next;
+        }
+        if (!target_node)
+            target_node = find_max(stack_b);
+        if (target_node)
+            printf("Target for A node value %d: B node value %d\n", current_a->value, target_node->value);
+        else
+            printf("No target found for A node value %d, using max B\n", current_a->value);
+        current_a->target = target_node;
+        current_a = current_a->next;
+    }
+}
+
+
+void set_target_b(t_stack *stack_a, t_stack *stack_b)
+{
+    t_node *current_a;
+    t_node *current_b;
+    t_node *target;
+    int diff;
+    int min_diff;
+
+    if (!stack_a || !stack_b)
+        return;
+    current_a = stack_a->top;
+    while (current_a)
+    {
+        current_b = stack_b->top;
+        min_diff = INT_MAX;
+        target = NULL;
+
+        while (current_b)
+        {
+            diff = current_b->value - current_a->value;
+            if (diff > 0 && diff < min_diff)
+            {
+                min_diff = diff;
+                target = current_b;
+            }
+            current_b = current_b->next;
+        }
+        if (!target)
+            target = find_max(stack_b);
+        current_a->target = target;
+        current_a = current_a->next;
+    }
+}
+
+void cost(t_stack *stack_a, t_stack *stack_b)
+{
+    int len_a = stack_size(stack_a);
+    int len_b = stack_size(stack_b);
+    t_node *current_a = stack_a->top;
+    
+    while (current_a) {
+        current_a->push_cost = current_a->index;
+        if (!current_a->above_median)
+            current_a->push_cost = len_a - current_a->index;
+        if (current_a->target->above_median)
+            current_a->push_cost += current_a->target->index;
+        else
+            current_a->push_cost += len_b - current_a->target->index;
         
-        align_stacks(stack_a, stack_b, pos_a, pos_b);
-        pb(stack_a, stack_b);
+        current_a = current_a->next;
     }
-	sort_three(stack_a);
-    while (stack_size(stack_b) > 0)
-    {
-        int value = stack_b->top->value;
-        int pos_a = calculate_insert_pos(stack_a, value);
+}
 
-        align_stack_a(stack_a, pos_a);
-        pa(stack_b, stack_a);
+void prep_for_push(t_stack *stack, t_node *top_node, char stack_name)
+{
+    t_node *current = stack->top;
+
+    while (current != top_node)
+    {
+        if (stack_name == 'a')
+        {
+            if (top_node->above_median)
+                ra(stack);
+            else
+                rra(stack);
+        }
+        else if (stack_name == 'b')
+        {
+            if (top_node->above_median)
+                rb(stack);
+            else
+                rrb(stack);
+        }
+        current = current->next;
     }
-	finalize_sort(stack_a);
+}
+
+
+void cheapest_value(t_stack *stack)
+{
+    long cheapest_value = LONG_MAX;
+    t_node *cheapest_node = NULL;
+    t_node *current = stack->top;
+
+    if (!stack || !stack->top)
+        return;
+    while (current) {
+        if (current->push_cost < cheapest_value) {
+            cheapest_value = current->push_cost;
+            cheapest_node = current;
+        }
+        current = current->next;
+    }   
+    if (cheapest_node)
+        cheapest_node->cheapest = true;
+}
+
+void init_nodes_a(t_stack *a, t_stack *b)
+{
+    current_index(a);
+    current_index(b);
+    set_target_a(a, b);
+    cost(a, b);
+	cheapest_value(a);
+}
+
+void init_nodes_b(t_stack *a, t_stack *b)
+{
+    current_index(a);
+    current_index(b);
+    set_target_b(a, b);
 }

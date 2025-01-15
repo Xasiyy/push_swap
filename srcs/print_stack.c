@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void print_stack(t_stack *stack)
+/* void print_stack(t_stack *stack)
 {
    t_node *current;
 
@@ -22,6 +22,18 @@ void print_stack(t_stack *stack)
       printf("%d\n", current->value);
       current = current->next;
    }
+} */
+
+void print_stack(t_stack *stack)
+{
+    t_node *current = stack->top;
+    printf("Stack:\n");
+    while (current)
+    {
+        printf("%d ", current->value);
+        current = current->next;
+    }
+    printf("\n");
 }
 
 void init_stack_with_values(t_stack *stack, int values[], int size)
