@@ -69,24 +69,5 @@ t_node	*find_min(t_stack *stack);
 t_node *find_max(t_stack *stack);
 int	is_sorted(t_stack *stack);
 void sort_three(t_stack *stack);
-void	push_elem_b(t_stack *stack_a, t_stack *stack_b);
-void min_on_top(t_stack *stack);
-void move_a_to_b(t_stack *stack_a, t_stack *stack_b);
-void move_b_to_a(t_stack *stack_a, t_stack *stack_b);
-void sort_stacks(t_stack *stack_a, t_stack *stack_b);
-void	push_elem_b(t_stack *stack_a, t_stack *stack_b);
-void indices_median(t_stack *stack);
-void	cheapest_value(t_stack *stack);
-t_node *get_cheapest(t_stack *stack);
-void move_to_top(t_stack *stack, t_node *node);
-void set_target_a(t_stack *stack_a, t_stack *stack_b);
-void cost(t_stack *stack_a, t_stack *stack_b);
-void current_index(t_stack *stack);
-void init_nodes_a(t_stack *a, t_stack *b);
-void init_nodes_b(t_stack *a, t_stack *b);
-void prep_for_push(t_stack *stack, t_node *top_node, char stack_name);
-void insert_in_sorted_order(t_stack *stack_a, t_node *node);
-void	adjust_stack_a(t_stack *stack_a);
-void	push_to_sorted_b(t_stack *stack_a, t_stack *stack_b);
 
 #endif
