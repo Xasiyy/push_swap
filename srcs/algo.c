@@ -39,7 +39,10 @@ t_node *find_min(t_stack *stack)
     t_node *min_node = NULL;
 
     if (!stack || !stack->top)
+	{
+		printf("\nla pile est vide");
         return NULL;
+	}
 
     min_node = current;
     while (current->next && current->next != stack->top)
@@ -89,7 +92,7 @@ t_node *find_cheapest_node(t_stack *stack)
 {
 	t_node *current;
 	t_node *cheapest;
-	t_node *first_node = stack->top;
+	t_node *last_node = stack->top->prev;
 	int min_cost;
 
 	if (!stack || !stack->top)
@@ -97,7 +100,7 @@ t_node *find_cheapest_node(t_stack *stack)
 	current = stack->top;
 	cheapest = NULL;
 	min_cost = INT_MAX;
-	while (current != first_node)
+	while (current != last_node)
 	{
 		if (current->push_cost < min_cost)
 		{
@@ -108,6 +111,7 @@ t_node *find_cheapest_node(t_stack *stack)
 	}
 	return (cheapest);
 }
+
 void	sort_stack(t_stack *a, t_stack *b)
 {
 	t_node *cheapest_node;
