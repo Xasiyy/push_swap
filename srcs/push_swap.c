@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-// push A to B 
+// prepush A to B 
 
 void    find_index(t_stack *stack)
 {
@@ -24,7 +24,7 @@ void    find_index(t_stack *stack)
 	i = 0;
 	if (!stack || !stack->top)
 		return ;
-	len = stack_len(stack);
+	len = stack_size(stack);
 	median = len / 2;
 	current = stack->top;
 	while (current)
@@ -45,12 +45,12 @@ void    compare_node_a(t_stack *a, t_stack *b)
 	t_node *best_target;
 	int best_difference;
 
-	if (!a || !b || !a->top || !b->top)
+	if (!a || !a->top)
 		return ;
 	current_a = a->top;
 	while (1)
 	{
-		best_target == NULL;
+		best_target = NULL;
 		best_difference = INT_MAX;
 		current_b = b->top;
 		while (1)
@@ -77,7 +77,7 @@ void    compare_node_a(t_stack *a, t_stack *b)
 		}
 		current_a->target = best_target;
 		current_a = current_a->target;
-		if (current_a = a->top)
+		if (current_a == a->top)
 			break;
 	} 
 }
@@ -131,7 +131,7 @@ void	min_cost(t_stack *a)
 			cheapest = current;
 		}
 		current = current->next;
-		if(current = a->top)
+		if(current == a->top)
 			break;
 	}
 	current = a->top;
@@ -151,4 +151,75 @@ void	calcul_nodes_a(t_stack *a, t_stack *b)
 	compare_node_a(a, b);
 	find_cost(a, b);
 	min_cost(a);
+}
+
+// prepush B to A
+
+bool	best_match(int a_value, int b_value, int index)
+{
+	return (a_value > b_value && a_value < index);
+}
+
+void	compare_node_b(t_stack *a, t_stack *b)
+{
+	t_node *current_a;
+	t_node *node;
+	t_node *current_b;
+	long index;
+
+	if (!a || !b || !a->top || !b->top)
+		return;
+	current_b = b->top;
+	while (current_b)
+	{
+		current_a = a->top;
+		node = NULL;
+		index = LONG_MAX;
+		while (current_a)
+		{
+			if (best_match(current_a->value, current_b->value, index))
+			{
+				index = current_a->value;
+				node = current_a;
+			}
+			current_a = current_a->next;
+		}
+		if (index == LONG_MAX)
+			current_b->target = find_min(a);
+		else
+			current_b->target = node;
+		current_b = current_b->next;
+	}
+}
+
+void	calcul_node_b(t_stack *a, t_stack *b)
+{
+	if (!a || !b)
+		return;
+	find_index(a);
+	find_index(b);
+	compare_node_b(a, b);
+}
+
+void	prepush(t_stack *stack, t_node *top_node, char name)
+{
+	if (!stack || !stack->top || !top_node)
+		return ;
+	while (stack->top != top_node)
+	{
+		if (name == 'a')
+		{
+			if (top_node->above_median)
+				ra(stack);
+			else
+				rra(stack);
+		}
+		else if (name == 'b')
+		{
+			if (top_node->above_median)
+				rb(stack);
+			else
+				rrb(stack);
+		}
+	}
 }

@@ -42,11 +42,11 @@ t_node *find_min(t_stack *stack)
         return NULL;
 
     min_node = current;
-    while (current)
+    while (current->next && current->next != stack->top)
     {
+		current = current->next;
         if (current->value < min_node->value)
             min_node = current;
-        current = current->next;
     }
     return min_node;
 }
@@ -83,4 +83,46 @@ int	is_sorted(t_stack *stack)
 		current = current->next;
 	}		
 	return (1);
+}
+
+t_node *find_cheapest_node(t_stack *stack)
+{
+	t_node *current;
+	t_node *cheapest;
+	t_node *first_node = stack->top;
+	int min_cost;
+
+	if (!stack || !stack->top)
+		return (NULL);
+	current = stack->top;
+	cheapest = NULL;
+	min_cost = INT_MAX;
+	while (current != first_node)
+	{
+		if (current->push_cost < min_cost)
+		{
+			min_cost = current->push_cost;
+			cheapest = current;
+		}
+		current = current->next;
+	}
+	return (cheapest);
+}
+void	sort_stack(t_stack *a, t_stack *b)
+{
+	t_node *cheapest_node;
+
+	while (stack_size(b) > 0)
+	{
+		calcul_nodes_a(a, b);
+		cheapest_node = find_cheapest_node(a);
+		prepush(b, cheapest_node->target, 'b');
+		pa(a, b);
+	}
+	while (!is_sorted(a))
+	{
+		cheapest_node  = find_cheapest_node(a);
+		prepush(a, cheapest_node->target, 'a');
+		ra(a);
+	}
 }

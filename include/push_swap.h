@@ -66,8 +66,21 @@ void	rrb(t_stack *stack_b);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
 //algo
 t_node	*find_min(t_stack *stack);
-t_node *find_max(t_stack *stack);
-int	is_sorted(t_stack *stack);
-void sort_three(t_stack *stack);
+t_node	*find_max(t_stack *stack);
+t_node	*find_cheapest_node(t_stack *stack);
+int		is_sorted(t_stack *stack);
+void	sort_three(t_stack *stack);
+void	prepush(t_stack *stack, t_node *top_node, char name);
+//push stack
+void    find_index(t_stack *stack);
+void    compare_node_a(t_stack *a, t_stack *b);
+void    find_cost(t_stack *a, t_stack *b);
+void	min_cost(t_stack *a);
+void	calcul_nodes_a(t_stack *a, t_stack *b);
+bool	best_match(int a_value, int b_value, int index);
+void	compare_node_b(t_stack *a, t_stack *b);
+void	calcul_node_b(t_stack *a, t_stack *b);
+void	prepush(t_stack *stack, t_node *top_node, char name);
+void	sort_stack(t_stack *a, t_stack *b);
 
 #endif
