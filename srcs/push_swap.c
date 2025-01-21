@@ -38,49 +38,48 @@ void    find_index(t_stack *stack)
 	}
 }
 
-void    compare_node_a(t_stack *a, t_stack *b)
+void compare_node_a(t_stack *a, t_stack *b)
 {
-	t_node *current_a;
-	t_node *current_b;
-	t_node *best_target;
-	int best_difference;
+    t_node *current_a;
+    t_node *current_b;
+    t_node *best_target;
+    int best_difference;
 
-	if (!a || !a->top)
-		return ;
-	current_a = a->top;
-	while (1)
-	{
-		best_target = NULL;
-		best_difference = INT_MAX;
-		current_b = b->top;
-		while (1)
-		{
-			if (current_b->value < current_a->value && (current_a->value - current_b->value) < best_difference)
-			{
-				best_difference = current_a->value - current_b->value;
-				best_target = current_b;
-			}
-			current_b = current_b->next;
-			if (current_b == b->top)
-				break;
-		}
-		if (!best_target)
-		{
-			best_target = b->top;
-			current_b = b->top;
-			while (current_b != b->top)
-			{
-				if (current_b->value >  best_target->value)
-					best_target = current_b;
-				current_b = current_b->next;
-			}
-		}
-		current_a->target = best_target;
-		current_a = current_a->target;
-		if (current_a == a->top)
-			break;
-	} 
+    if (!a || !a->top)
+        return;
+    current_a = a->top;
+    while (current_a)
+    {
+        best_target = NULL;
+        best_difference = INT_MAX;
+        current_b = b->top;
+        int iter_count = 0;
+        while (current_b && iter_count < stack_size(b))
+        {
+            if (current_b->value < current_a->value &&
+                (current_a->value - current_b->value) < best_difference)
+            {
+                best_difference = current_a->value - current_b->value;
+                best_target = current_b;
+            }
+            current_b = current_b->next;
+            iter_count++;
+        }
+        if (iter_count >= stack_size(b))
+        {
+            printf("Error: Infinite loop detected in compare_node_a\n");
+            return;
+        }
+        if (best_target)
+            current_a->target = best_target;
+        else
+            current_a->target = find_min(a);
+        current_a = current_a->next;
+        if (current_a == a->top)
+            break;
+    }
 }
+
 
 void    find_cost(t_stack *a, t_stack *b)
 {
@@ -203,10 +202,17 @@ void	calcul_node_b(t_stack *a, t_stack *b)
 
 void	prepush(t_stack *stack, t_node *top_node, char name)
 {
+	int size = stack_size(stack);
+	int rotation_count = 0;
 	if (!stack || !stack->top || !top_node)
 		return ;
 	while (stack->top != top_node)
 	{
+		if (rotation_count >= size)
+		{
+			printf("error infinite loop detected in prepush\n");
+			return;
+		}
 		if (name == 'a')
 		{
 			if (top_node->above_median)
@@ -221,5 +227,6 @@ void	prepush(t_stack *stack, t_node *top_node, char name)
 			else
 				rrb(stack);
 		}
+		rotation_count++;
 	}
 }

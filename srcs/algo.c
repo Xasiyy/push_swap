@@ -112,21 +112,44 @@ t_node *find_cheapest_node(t_stack *stack)
 	return (cheapest);
 }
 
-void	sort_stack(t_stack *a, t_stack *b)
+void	push_to_b(t_stack *a, t_stack *b)
 {
-	t_node *cheapest_node;
+	t_node *min_node;
 
+	while (stack_size(a) > 3)
+	{
+		min_node = find_min(a);
+		prepush(a, min_node, 'a');
+		pb(a, b);
+	}
+}
+
+
+void push_back_to_a(t_stack *a, t_stack *b)
+{
 	while (stack_size(b) > 0)
 	{
-		calcul_nodes_a(a, b);
-		cheapest_node = find_cheapest_node(a);
-		prepush(b, cheapest_node->target, 'b');
+		t_node *max_node = find_max(b);
+		prepush(b, max_node, 'b');
 		pa(a, b);
 	}
+}
+
+void	sort_stack(t_stack *a, t_stack *b)
+{
+	t_node *min_node;
+
+	push_to_b(a, b);
+	sort_three(a);
+	push_back_to_a(a, b);
 	while (!is_sorted(a))
 	{
-		cheapest_node  = find_cheapest_node(a);
-		prepush(a, cheapest_node->target, 'a');
-		ra(a);
+		min_node = find_min(a);
+        printf("Pushing %d from A to B\n", min_node->value);
+		prepush(a, min_node, 'a');
 	}
+    printf("Remaining in A: ");
+    print_stack(a);
+    printf("Stack B: ");
+    print_stack(b);	
 }
