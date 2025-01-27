@@ -80,7 +80,6 @@ void compare_node_a(t_stack *a, t_stack *b)
     }
 }
 
-
 void    find_cost(t_stack *a, t_stack *b)
 {
 	t_node *current_a;
@@ -202,10 +201,28 @@ void	calcul_node_b(t_stack *a, t_stack *b)
 
 void	prepush(t_stack *stack, t_node *top_node, char name)
 {
-	int size = stack_size(stack);
-	int rotation_count = 0;
+	int size;
+	int rotation_count;
+	t_node *current;
 	if (!stack || !stack->top || !top_node)
+	{
+		printf("error : stack invalid\n");
 		return ;
+	}
+	size = stack_size(stack);
+	rotation_count = 0;
+	current = stack->top;
+	while (current)
+	{
+		if (current == top_node)
+			break;
+		current = current->next;
+		if (current == stack->top)
+		{
+			printf("error : target node not found in the stack\n");
+			return;
+		}
+	}
 	while (stack->top != top_node)
 	{
 		if (rotation_count >= size)
@@ -230,3 +247,4 @@ void	prepush(t_stack *stack, t_node *top_node, char name)
 		rotation_count++;
 	}
 }
+ 

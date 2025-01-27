@@ -56,18 +56,21 @@ t_node *find_min(t_stack *stack)
 
 t_node *find_max(t_stack *stack)
 {
-    t_node *current = stack->top;
+    t_node *current;
     t_node *max_node = NULL;
     
     if (!stack || !stack->top)
-        return NULL;
+		return NULL;
 
+	current = stack->top;
     max_node = current;
-    while (current)
+    while (current != NULL)
     {
         if (current->value > max_node->value)
             max_node = current;
         current = current->next;
+		if (current == stack->top)
+			break;
     }
     return max_node;
 }
@@ -124,7 +127,6 @@ void	push_to_b(t_stack *a, t_stack *b)
 	}
 }
 
-
 void push_back_to_a(t_stack *a, t_stack *b)
 {
 	while (stack_size(b) > 0)
@@ -148,8 +150,4 @@ void	sort_stack(t_stack *a, t_stack *b)
         printf("Pushing %d from A to B\n", min_node->value);
 		prepush(a, min_node, 'a');
 	}
-    printf("Remaining in A: ");
-    print_stack(a);
-    printf("Stack B: ");
-    print_stack(b);	
 }
