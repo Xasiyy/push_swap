@@ -122,8 +122,11 @@ void	push_to_b(t_stack *a, t_stack *b)
 	while (stack_size(a) > 3)
 	{
 		min_node = find_min(a);
+        printf("Pushing %d from A to B\n", min_node->value);
 		prepush(a, min_node, 'a');
 		pb(a, b);
+		print_stack(a);
+		print_stack(b);
 	}
 }
 
@@ -133,7 +136,7 @@ void push_back_to_a(t_stack *a, t_stack *b)
 	{
 		t_node *max_node = find_max(b);
 		prepush(b, max_node, 'b');
-		pa(a, b);
+			pa(a, b);
 	}
 }
 
