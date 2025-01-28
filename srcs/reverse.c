@@ -16,7 +16,7 @@ void	reverse(t_stack *stack)
 {
 	t_node *last;
 	t_node *second_last;
-		
+
 	if (!stack || !stack->top || !stack->top->next)
 		return ;
 	last = stack->top;
@@ -36,7 +36,7 @@ void	reverse(t_stack *stack)
 void	rra(t_stack *stack_a)
 {
 	if (!stack_a || !stack_a->top || !stack_a->top->next)
-        return;
+		return;
 	write (1, "rra\n", 4);
 	reverse(stack_a);
 	count++;
@@ -56,7 +56,7 @@ void	rrr(t_stack *stack_a, t_stack *stack_b)
 	if (!stack_a || !stack_b)
 		return ;
 	write (1, "rrr\n", 4);
-	reverse(stack_a);	
+	reverse(stack_a);
 	reverse(stack_b);
 	count++;
 }

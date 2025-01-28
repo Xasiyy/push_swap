@@ -32,62 +32,61 @@ void	insertion_sort(int *arr, int n)
 		i++;
 	}
 }
-
 t_node *find_min(t_stack *stack)
 {
-    t_node *current = stack->top;
-    t_node *min_node = NULL;
+	t_node *current = stack->top;
+	t_node *min_node = NULL;
 
-    if (!stack || !stack->top)
+	if (!stack || !stack->top)
 	{
-		printf("\nla pile est vide");
-        return NULL;
+		return NULL;
 	}
 
-    min_node = current;
-    while (current->next && current->next != stack->top)
-    {
+	min_node = current;
+	while (current->next && current->next != stack->top)
+	{
 		current = current->next;
-        if (current->value < min_node->value)
-            min_node = current;
-    }
-    return min_node;
+		if (current->value < min_node->value)
+			min_node = current;
+	}
+	return min_node;
 }
 
 t_node *find_max(t_stack *stack)
 {
-    t_node *current;
-    t_node *max_node = NULL;
-    
-    if (!stack || !stack->top)
+	t_node *current;
+	t_node *max_node = NULL;
+
+	if (!stack || !stack->top)
 		return NULL;
 
 	current = stack->top;
-    max_node = current;
-    while (current != NULL)
-    {
-        if (current->value > max_node->value)
-            max_node = current;
-        current = current->next;
+	max_node = current;
+	while (current != NULL)
+	{
+		if (current->value > max_node->value)
+			max_node = current;
+		current = current->next;
 		if (current == stack->top)
 			break;
-    }
-    return max_node;
+	}
+	return max_node;
 }
+
 
 int	is_sorted(t_stack *stack)
 {
 	t_node *current;
 
 	if (!stack || !stack->top)
-		return (1);
+		return (true);
 	current = stack->top;
 	while (current && current->next)
 	{
 		if (current->value > current->next->value)
 			return (0);
 		current = current->next;
-	}		
+	}
 	return (1);
 }
 
@@ -122,7 +121,6 @@ void	push_to_b(t_stack *a, t_stack *b)
 	while (stack_size(a) > 3)
 	{
 		min_node = find_min(a);
-        printf("Pushing %d from A to B\n", min_node->value);
 		prepush(a, min_node, 'a');
 		pb(a, b);
 		print_stack(a);
@@ -150,7 +148,6 @@ void	sort_stack(t_stack *a, t_stack *b)
 	while (!is_sorted(a))
 	{
 		min_node = find_min(a);
-        printf("Pushing %d from A to B\n", min_node->value);
-		prepush(a, min_node, 'a');
+			prepush(a, min_node, 'a');
 	}
 }

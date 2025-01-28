@@ -32,7 +32,7 @@ void	rotate(t_stack *stack)
 void	ra(t_stack *stack_a)
 {
 	if (!stack_a || !stack_a->top || !stack_a->top->next)
-        return;
+		return;
 	write (1, "ra\n", 3);
 	rotate (stack_a);
 	count++;

@@ -15,7 +15,7 @@
 void	push(t_stack *src, t_stack *dest)
 {
 	t_node *move_node;
-	
+
 	if (!src || !src->top)
 		return ;
 	move_node = pop(src);
@@ -28,29 +28,16 @@ void	push(t_stack *src, t_stack *dest)
 		dest->top = move_node;
 	}
 }
-// void	pa(t_stack *stack_b, t_stack *stack_a)
-// {
-// 	if (!stack_b || !stack_b->top)
-// 		return ;
-// 	write (1, "pa\n", 3);
-// 	push(stack_b, stack_a);
-// 	count++;
-// }
-// 
 
 void pa(t_stack *stack_a, t_stack *stack_b)
 {
-    if (!stack_b || !stack_b->top) // Vérifie si stack_b est vide ou NULL
-        return;
-
-    t_node *temp = stack_b->top;  // Récupère le sommet de stack_b
-
-    // Déplace le sommet de stack_b vers stack_a
-    stack_b->top = stack_b->top->next;  // Le sommet de stack_b est maintenant le suivant
-    temp->next = stack_a->top;  // L'élément déplacé pointe maintenant vers le sommet de stack_a
-    stack_a->top = temp;  // Le sommet de stack_a devient l'élément déplacé
-
-    write(1, "pa\n", 3);  // Affiche l'instruction "pa"
+	if (!stack_b || !stack_b->top)
+		return;
+	t_node *temp = stack_b->top;
+	stack_b->top = stack_b->top->next;
+	temp->next = stack_a->top;
+	stack_a->top = temp;
+	write(1, "pa\n", 3);
 }
 
 
@@ -61,4 +48,4 @@ void	pb(t_stack *stack_a, t_stack *stack_b)
 	write(1, "pb\n", 3);
 	push(stack_a, stack_b);
 	count++;
-}	
+}

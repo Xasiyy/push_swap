@@ -16,7 +16,7 @@ void	swap(t_stack *stack)
 {
 	t_node *first;
 	t_node *second;
-	
+
 	if (stack->top && stack->top->next)
 	{
 		first = stack->top;
@@ -27,7 +27,7 @@ void	swap(t_stack *stack)
 		second->next = first;
 		second->prev = first->prev;
 		if (first->prev)
-			first->prev->next = second; 
+			first->prev->next = second;
 		first->prev = second;
 		stack->top = second;
 	}

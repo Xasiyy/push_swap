@@ -15,11 +15,11 @@
 t_stack *init_stack()
 {
 	t_stack *stack;
-	
+
 	stack = malloc(sizeof(t_stack));
 	if (!stack)
 	{
-		perror("Erreur : Allocation de mémoire pour la pile échouée");	
+		perror("Erreur : Allocation de mémoire pour la pile échouée");
 		return (NULL);
 	}
 	stack->top = NULL;
@@ -41,7 +41,7 @@ void	add_elem(t_stack *stack, int value)
 		stack->top = new_node;
 		new_node->prev = NULL;
 	}
-	else 
+	else
 	{
 		current = stack->top;
 		while (current->next)
@@ -89,33 +89,7 @@ void	free_stack(t_stack **stack)
 	*stack = NULL;
 }
 
-void	remove_elem(t_stack *stack, int value)
-{
-	t_node *current;
-	t_node *temp;
-	
-	if (!stack || !stack->top)
-		return ;
-	current = stack->top;
-	while (current)
-	{
-		if (current->value == value)
-		{
-			if (current->prev)
-				current->prev->next = current->next;
-			else
-				stack->top = current->next;
-			if (current->next)
-				current->next->prev = current->prev;
-			temp = current;
-			current = current->next;
-			free(temp);
-			return ;
-		}
-		else
-			current = current->next;
-	}
-}
+
 
 t_node *pop(t_stack *stack)
 {
@@ -145,34 +119,33 @@ int	stack_size(t_stack *stack)
 	}
 	return (size);
 }
-
 void sort_three(t_stack *stack)
 {
-    int first;
-    int second;
-    int third;
+	int first;
+	int second;
+	int third;
 
-    if (stack_size(stack) != 3)
-        return;
+	if (stack_size(stack) != 3)
+		return;
 
-    first = stack->top->value;
-    second = stack->top->next->value;
-    third = stack->top->next->next->value;
+	first = stack->top->value;
+	second = stack->top->next->value;
+	third = stack->top->next->next->value;
 
-    if (first > second && second < third && first < third)
-        sa(stack);
-    else if (first > second && second > third && first > third)
-    {
-        sa(stack);
-        rra(stack);
-    }
-    else if (first > second && second < third && first > third)
-        ra(stack);
-    else if (first < second && second > third && first < third)
-    {
-        sa(stack);
-        ra(stack);
-    }
-    else if (first < second && second > third && first > third)
-        rra(stack);
+	if (first > second && second < third && first < third)
+		sa(stack);
+	else if (first > second && second > third && first > third)
+	{
+		sa(stack);
+		rra(stack);
+	}
+	else if (first > second && second < third && first > third)
+		ra(stack);
+	else if (first < second && second > third && first < third)
+	{
+		sa(stack);
+		ra(stack);
+	}
+	else if (first < second && second > third && first > third)
+		rra(stack);
 }
