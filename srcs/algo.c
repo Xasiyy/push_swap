@@ -122,11 +122,8 @@ void	push_to_b(t_stack *a, t_stack *b)
 	while (stack_size(a) > 3)
 	{
 		min_node = find_min(a);
-        printf("Pushing %d from A to B\n", min_node->value);
 		prepush(a, min_node, 'a');
 		pb(a, b);
-		print_stack(a);
-		print_stack(b);
 	}
 }
 
@@ -150,7 +147,6 @@ void	sort_stack(t_stack *a, t_stack *b)
 	while (!is_sorted(a))
 	{
 		min_node = find_min(a);
-        printf("Pushing %d from A to B\n", min_node->value);
 		prepush(a, min_node, 'a');
 	}
 }

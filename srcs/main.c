@@ -39,15 +39,8 @@ int	main(int argc, char **argv)
         return (1);
     }
 
-    printf("Initial stack A:\n");
-    print_stack(stack_a);
-
     sort_stack(stack_a, stack_b);
-    printf("Sorted stack A:\n");
-    print_stack(stack_a);
-    printf("sttack B\n");
-    print_stack(stack_b);
-    printf("count=%d\n", count);
+
     free_stack(&stack_a);
     free_stack(&stack_b);
     return (0);
