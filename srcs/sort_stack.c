@@ -119,6 +119,7 @@ int	stack_size(t_stack *stack)
 	}
 	return (size);
 }
+
 void sort_three(t_stack *stack)
 {
 	int first;
@@ -127,11 +128,9 @@ void sort_three(t_stack *stack)
 
 	if (stack_size(stack) != 3)
 		return;
-
 	first = stack->top->value;
 	second = stack->top->next->value;
 	third = stack->top->next->next->value;
-
 	if (first > second && second < third && first < third)
 		sa(stack);
 	else if (first > second && second > third && first > third)

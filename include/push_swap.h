@@ -22,6 +22,7 @@
 
 typedef struct s_node{
 	int value;
+	int size;
 	int index;
 	int cost_a;
 	int cost_b;
@@ -82,5 +83,6 @@ void	compare_node_b(t_stack *a, t_stack *b);
 void	calcul_node_b(t_stack *a, t_stack *b);
 void	prepush(t_stack *stack, t_node *top_node, char name);
 void	sort_stack(t_stack *a, t_stack *b);
+// void	split(t_stack *a, t_stack *b);
 
 #endif

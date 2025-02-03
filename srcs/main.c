@@ -21,9 +21,7 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		return (1);
 	if (parsing(argc, argv) < 0)
-	{
 		return (1);
-	}
 	stack_a = create_stack(argc, argv);
 	if (!stack_a)
 		return (1);
@@ -33,10 +31,7 @@ int	main(int argc, char **argv)
 		free_stack(&stack_a);
 		return (1);
 	}
-	print_stack(stack_a);
 	sort_stack(stack_a, stack_b);
-	print_stack(stack_a);
-	print_stack(stack_b);
 	free_stack(&stack_a);
 	free_stack(&stack_b);
 	return (0);

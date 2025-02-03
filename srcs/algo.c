@@ -12,26 +12,6 @@
 
 #include "push_swap.h"
 
-void	insertion_sort(int *arr, int n)
-{
-	int i;
-	int key;
-	int j;
-
-	i = 1;
-	while (i < n)
-	{
-		key = arr[i];
-		j = i - 1;
-		while (j >= 0 && arr[j] > key)
-		{
-			arr[j + 1] = arr[j];
-			j = j - 1;
-		}
-		arr[j + 1] = key;
-		i++;
-	}
-}
 t_node *find_min(t_stack *stack)
 {
 	t_node *current = stack->top;
@@ -90,41 +70,21 @@ int	is_sorted(t_stack *stack)
 	return (1);
 }
 
-t_node *find_cheapest_node(t_stack *stack)
-{
-	t_node *current;
-	t_node *cheapest;
-	t_node *last_node = stack->top->prev;
-	int min_cost;
-
-	if (!stack || !stack->top)
-		return (NULL);
-	current = stack->top;
-	cheapest = NULL;
-	min_cost = INT_MAX;
-	while (current != last_node)
-	{
-		if (current->push_cost < min_cost)
-		{
-			min_cost = current->push_cost;
-			cheapest = current;
-		}
-		current = current->next;
-	}
-	return (cheapest);
-}
-
 void	push_to_b(t_stack *a, t_stack *b)
 {
 	t_node *min_node;
 
 	while (stack_size(a) > 3)
 	{
+		if (a->top->value > a->top->next->value \
+			&& a->top->next->value < a->top->next->next->value \
+			&& a->top->value < a->top->next->next->value)
+			sa(a);
 		min_node = find_min(a);
 		prepush(a, min_node, 'a');
+		if(is_sorted(a))
+			break;
 		pb(a, b);
-		print_stack(a);
-		print_stack(b);
 	}
 }
 
@@ -140,14 +100,7 @@ void push_back_to_a(t_stack *a, t_stack *b)
 
 void	sort_stack(t_stack *a, t_stack *b)
 {
-	t_node *min_node;
-
 	push_to_b(a, b);
 	sort_three(a);
 	push_back_to_a(a, b);
-	while (!is_sorted(a))
-	{
-		min_node = find_min(a);
-			prepush(a, min_node, 'a');
-	}
 }

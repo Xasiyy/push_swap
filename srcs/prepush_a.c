@@ -6,7 +6,7 @@
 /*   By: toadette <toadette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:21 by toadette          #+#    #+#             */
-/*   Updated: 2025/01/28 15:06:32 by toadette         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:52:01 by toadette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,25 @@ void	find_index(t_stack *stack)
 	while(current)
 	{
 		current->index = i;
-		current->above_median = i < median;
+		current->above_median = i <= median;
 		current = current->next;
 		i++;
 		if (current == stack->top)
 			break;
+	}
+}
+void	prepush(t_stack *stack, t_node *top_node, char name)
+{
+	find_index(stack);
+	while (stack->top != top_node)
+	{
+		if (name == 'a')
+		{
+			if (top_node->above_median)
+				ra(stack);
+			else
+				rra(stack);
+		}
 	}
 }
 void compare_node_a(t_stack *a, t_stack *b)
@@ -141,4 +155,30 @@ void	calcul_nodes_a(t_stack *a, t_stack *b)
 	compare_node_a(a, b);
 	find_cost(a, b);
 	min_cost(a);
+}
+void	split(t_stack *a, t_stack *b)
+{
+	t_node *current;
+	int len_a;
+
+	if (!a || !b || !a->top || !b->top)
+		return ;
+	len_a = stack_size(a);
+	current = a->top;
+	while (1)
+	{
+		if (current->cheapest)
+		{
+			if (current->index <= len_a / 2)
+				ra(a);
+			else
+				rra(a);
+			pb(a, b);
+		}
+		else
+			ra(a);
+		current = a->top;
+		if (current == a->top)
+			break;
+	}
 }
