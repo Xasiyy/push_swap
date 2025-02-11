@@ -12,51 +12,37 @@
 
 #include "push_swap.h"
 
-void	reverse(t_stack *stack)
+static void rev_rotate(t_stack_node **stack)
 {
-	t_node *last;
-	t_node *second_last;
-		
-	if (!stack || !stack->top || !stack->top->next)
-		return ;
-	last = stack->top;
-	second_last = NULL;
-	while (last->next != NULL)
-	{
-		second_last = last;
-		last = last->next;
-	}
-	second_last->next = NULL;
-	last->next = stack->top;
-	stack->top->prev = last;
-	stack->top = last;
-	stack->top->prev = NULL;
-}
-
-void	rra(t_stack *stack_a)
-{
-	if (!stack_a || !stack_a->top || !stack_a->top->next)
+    if (!stack || !*stack || !((*stack)->next))
         return;
-	write (1, "rra\n", 4);
-	reverse(stack_a);
-	count++;
+    t_stack_node *last = find_last(*stack);
+    if(last->prev)
+        last->prev->next = NULL;
+    last->prev = NULL;
+    last->next = *stack;
+    (*stack)->prev = last;
+    *stack = last;
 }
 
-void	rrb(t_stack *stack_b)
+void rra(t_stack_node **a, bool print)
 {
-	if (!stack_b || !stack_b->top || !stack_b->top->next)
-		return ;
-	write (1, "rrb\n", 4);
-	reverse(stack_b);
-	count++;
+    rev_rotate(a);
+    if (!print)
+        printf("rra\n");
 }
 
-void	rrr(t_stack *stack_a, t_stack *stack_b)
+void rrb(t_stack_node **b, bool print)
 {
-	if (!stack_a || !stack_b)
-		return ;
-	write (1, "rrr\n", 4);
-	reverse(stack_a);	
-	reverse(stack_b);
-	count++;
+    rev_rotate(b);
+    if (!print)
+        printf("rrb\n");
+}
+
+void rrr(t_stack_node **a, t_stack_node **b, bool print)
+{
+    rra(a, true);
+    rrb(b, true);
+    if (!print)
+        printf("rrr\n");
 }

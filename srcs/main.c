@@ -12,36 +12,32 @@
 
 #include "push_swap.h"
 
-int count = 0;
-
-int	main(int argc, char **argv)
-{
-    t_stack	*stack_a;
-    t_stack *stack_b;
+int main(int argc, char **argv) {
+    t_stack_node *a = NULL;
+    t_stack_node *b = NULL;
 
     if (argc < 2)
-        return (1);
-
-    if (parsing(argc, argv) < 0)
-    {
-        printf("error: duplicate value\n");
-        return (1);
+        return 1;
+    init_stack_a(&a, argv + 1);
+    
+    if (!stack_sorted(a)) {
+        if (stack_len(a) == 2) {
+            sa(&a, false);
+            update_all_stacks(&a, NULL);
+        }
+        else if (stack_len(a) == 3)
+            sort_three(&a);
+        else
+            sort_stacks(&a, &b);
     }
-
-    stack_a = create_stack(argc, argv);
-    if (!stack_a)
-        return (1);
-
-    stack_b = init_stack();
-    if (!stack_b)
-    {
-        free_stack(&stack_a);
-        return (1);
+    t_stack_node *curr = a;
+    while (curr) {
+        printf("%d ", curr->nbr);
+        curr = curr->next;
     }
+    printf("\n");
+    free_stack(&a);
+    free_stack(&b);
+    return 0;
+}
 
-    sort_stack(stack_a, stack_b);
-
-    free_stack(&stack_a);
-    free_stack(&stack_b);
-    return (0);
-}   

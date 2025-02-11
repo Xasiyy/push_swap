@@ -12,141 +12,169 @@
 
 #include "push_swap.h"
 
-void	insertion_sort(int *arr, int n)
+int is_digit(int c)
 {
-	int i;
-	int key;
-	int j;
-
-	i = 1;
-	while (i < n)
-	{
-		key = arr[i];
-		j = i - 1;
-		while (j >= 0 && arr[j] > key)
-		{
-			arr[j + 1] = arr[j];
-			j = j - 1;
-		}
-		arr[j + 1] = key;
-		i++;
-	}
+	return (c >= '0' && c <= '9');
 }
 
-t_node *find_min(t_stack *stack)
+t_stack_node *find_min(t_stack_node *stack)
 {
-    t_node *current = stack->top;
-    t_node *min_node = NULL;
-
-    if (!stack || !stack->top)
-	{
-		printf("\nla pile est vide");
+    if (!stack)
         return NULL;
-	}
-
-    min_node = current;
-    while (current->next && current->next != stack->top)
-    {
-		current = current->next;
-        if (current->value < min_node->value)
-            min_node = current;
+    t_stack_node *curr = stack;
+    t_stack_node *min_node = stack;
+    while (curr) {
+        if (curr->nbr < min_node->nbr)
+            min_node = curr;
+        curr = curr->next;
     }
     return min_node;
 }
 
-t_node *find_max(t_stack *stack)
+t_stack_node *find_max(t_stack_node *stack)
 {
-    t_node *current;
-    t_node *max_node = NULL;
-    
-    if (!stack || !stack->top)
-		return NULL;
-
-	current = stack->top;
-    max_node = current;
-    while (current != NULL)
-    {
-        if (current->value > max_node->value)
-            max_node = current;
-        current = current->next;
-		if (current == stack->top)
-			break;
+    if (!stack)
+        return NULL;
+    t_stack_node *curr = stack;
+    t_stack_node *max_node = stack;
+    while (curr) {
+        if (curr->nbr > max_node->nbr)
+            max_node = curr;
+        curr = curr->next;
     }
     return max_node;
 }
 
-int	is_sorted(t_stack *stack)
+bool stack_sorted(t_stack_node *stack)
 {
-	t_node *current;
-
-	if (!stack || !stack->top)
-		return (1);
-	current = stack->top;
-	while (current && current->next)
-	{
-		if (current->value > current->next->value)
-			return (0);
-		current = current->next;
-	}		
-	return (1);
+    t_stack_node *curr = stack;
+    while (curr && curr->next) {
+        if (curr->nbr > curr->next->nbr)
+            return false;
+        curr = curr->next;
+    }
+    return true;
 }
 
-t_node *find_cheapest_node(t_stack *stack)
+void push_to_b(t_stack_node **a, t_stack_node **b)
 {
-	t_node *current;
-	t_node *cheapest;
-	t_node *last_node = stack->top->prev;
-	int min_cost;
+    while (stack_len(*a) > 3)
+    {
+        init_nodes_a(a, b);
+        
+        t_stack_node *cheapest_node = NULL;
+        t_stack_node *curr = *a;
+        while (curr)
+        {
+            if (curr->cheapest)
+            {
+                cheapest_node = curr;
+                break;
+            }
+            curr = curr->next;
+        }
+        if (!cheapest_node)
+            return;
+        
+        prepush(a, b, cheapest_node, 'a');
+        
+        pb(b, a, false);
+        
+        update_all_stacks(a, b);
+    }
+}
 
-	if (!stack || !stack->top)
-		return (NULL);
-	current = stack->top;
-	cheapest = NULL;
-	min_cost = INT_MAX;
-	while (current != last_node)
+void push_back_to_a(t_stack_node **a, t_stack_node **b) {
+    while (*b)
 	{
-		if (current->push_cost < min_cost)
+        init_nodes_b(a, b);
+        
+        t_stack_node *cheapest_node = NULL;
+        t_stack_node *curr = *b;
+        int min_cost = INT_MAX;
+        while (curr) {
+            if (curr->push_cost < min_cost) {
+                min_cost = curr->push_cost;
+                cheapest_node = curr;
+            }
+            curr = curr->next;
+        }
+        if (!cheapest_node)
+            return;
+        if (cheapest_node->target_node) {
+            while ((*a)->nbr != cheapest_node->target_node->nbr) {
+                if (cheapest_node->target_node->index <= stack_len(*a) / 2)
+                    ra(a, false);
+                else
+                    rra(a, false);
+                current_index(*a);
+            }
+        }
+        
+        pa(a, b, false);
+        update_all_stacks(a, b);
+    }
+}
+
+void final_sort(t_stack_node **a)
+{
+    t_stack_node *min_node = find_min(*a);
+    if (!min_node)
+        return;
+    int len = stack_len(*a);
+    if (min_node->index <= len / 2)
+	{
+        while (*a != min_node)
 		{
-			min_cost = current->push_cost;
-			cheapest = current;
-		}
-		current = current->next;
-	}
-	return (cheapest);
+            ra(a, false);
+            update_all_stacks(a, NULL);
+        }
+    } else {
+        while (*a != min_node) 
+		{
+            rra(a, false);
+            update_all_stacks(a, NULL);
+        }
+    }
 }
 
-void	push_to_b(t_stack *a, t_stack *b)
-{
-	t_node *min_node;
-
-	while (stack_size(a) > 3)
-	{
-		min_node = find_min(a);
-		prepush(a, min_node, 'a');
-		pb(a, b);
-	}
+void sort_stacks(t_stack_node **a, t_stack_node **b) {
+    push_to_b(a, b);
+    sort_three(a);
+    push_back_to_a(a, b);
+    final_sort(a);
 }
 
-void push_back_to_a(t_stack *a, t_stack *b)
-{
-	while (stack_size(b) > 0)
-	{
-		t_node *max_node = find_max(b);
-		prepush(b, max_node, 'b');
-			pa(a, b);
-	}
+t_stack_node *find_last(t_stack_node *stack) {
+    if (!stack)
+        return NULL;
+    t_stack_node *curr = stack;
+    while (curr->next)
+        curr = curr->next;
+    return curr;
 }
 
-void	sort_stack(t_stack *a, t_stack *b)
+void sort_three(t_stack_node **a)
 {
-	t_node *min_node;
-
-	push_to_b(a, b);
-	sort_three(a);
-	push_back_to_a(a, b);
-	while (!is_sorted(a))
-	{
-		min_node = find_min(a);
-		prepush(a, min_node, 'a');
-	}
+    if (stack_len(*a) != 3)
+        return;
+    int first = (*a)->nbr;
+    int second = (*a)->next->nbr;
+    int third = (*a)->next->next->nbr;
+    if (first < second && second < third)
+        return;
+    else if (first > second && second < third && first < third)
+        sa(a, false);
+    else if (first > second && second > third) {
+        sa(a, false);
+        rra(a, false);
+    }
+    else if (first > second && second < third && first > third)
+        ra(a, false);
+    else if (first < second && second > third && first < third) {
+        sa(a, false);
+        ra(a, false);
+    }
+    else if (first < second && second > third && first > third)
+        rra(a, false);
 }

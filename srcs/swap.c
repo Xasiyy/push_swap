@@ -12,45 +12,38 @@
 
 #include "push_swap.h"
 
-void	swap(t_stack *stack)
+static void swap_stack(t_stack_node **head)
 {
-	t_node *first;
-	t_node *second;
-	
-	if (stack->top && stack->top->next)
-	{
-		first = stack->top;
-		second = stack->top->next;
-		first->next = second->next;
-		if (second->next)
-			second->next->prev = first;
-		second->next = first;
-		second->prev = first->prev;
-		if (first->prev)
-			first->prev->next = second; 
-		first->prev = second;
-		stack->top = second;
-	}
+    if (!head || !*head || !((*head)->next))
+        return;
+    t_stack_node *first = *head;
+    t_stack_node *second = first->next;
+    first->next = second->next;
+    if(second->next)
+        second->next->prev = first;
+    second->prev = NULL;
+    second->next = first;
+    first->prev = second;
+    *head = second;
 }
 
-void	sa(t_stack *stack_a)
+void sa(t_stack_node **a, bool print)
 {
-	write (1, "sa\n", 3);
-	swap(stack_a);
-	count++;
+    swap_stack(a);
+    if (!print)
+        printf("sa\n");
 }
 
-void	sb(t_stack *stack_b)
+void sb(t_stack_node **b, bool print)
 {
-	write (1, "sb\n", 3);
-	swap (stack_b);
-	count++;
+    swap_stack(b);
+    if (!print)
+        printf("sb\n");
 }
 
-void	ss(t_stack *stack_a, t_stack *stack_b)
-{
-	write (1, "ss\n", 3);
-	swap (stack_a);
-	swap (stack_b);
-	count++;
+void ss(t_stack_node **a, t_stack_node **b, bool print) {
+    swap_stack(a);
+    swap_stack(b);
+    if (!print)
+        printf("ss\n");
 }

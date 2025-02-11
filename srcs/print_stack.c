@@ -26,20 +26,27 @@
 
 void print_stack(t_stack *stack)
 {
-    t_node *current = stack->top;
-    printf("Stack:\n");
+    if (!stack || !stack->head)
+    {
+        printf("Stack is empty or not initialized\n");
+        return;
+    }
+
+    t_stack_node *current = stack->head;
+    printf("Stack: ");
     while (current)
     {
-        printf("%d ", current->value);
+        printf("%d ", current->nbr);
         current = current->next;
     }
     printf("\n");
 }
 
+
 void init_stack_with_values(t_stack *stack, int values[], int size)
 {
     for (int i = 0; i < size; i++)
     {
-        add_elem(stack, values[i]);
+        append_node(&stack->head, values[i]);
     }
 }

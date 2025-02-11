@@ -12,53 +12,31 @@
 
 #include "push_swap.h"
 
-void	push(t_stack *src, t_stack *dest)
+static void push_stack(t_stack_node **dst, t_stack_node **src)
 {
-	t_node *move_node;
-	
-	if (!src || !src->top)
-		return ;
-	move_node = pop(src);
-	if (!dest->top)
-		dest->top = move_node;
-	else
-	{
-		move_node->next = dest->top;
-		dest->top->prev = move_node;
-		dest->top = move_node;
-	}
-}
-// void	pa(t_stack *stack_b, t_stack *stack_a)
-// {
-// 	if (!stack_b || !stack_b->top)
-// 		return ;
-// 	write (1, "pa\n", 3);
-// 	push(stack_b, stack_a);
-// 	count++;
-// }
-// 
-
-void pa(t_stack *stack_a, t_stack *stack_b)
-{
-    if (!stack_b || !stack_b->top) // Vérifie si stack_b est vide ou NULL
+    if (!src || !*src)
         return;
-
-    t_node *temp = stack_b->top;  // Récupère le sommet de stack_b
-
-    // Déplace le sommet de stack_b vers stack_a
-    stack_b->top = stack_b->top->next;  // Le sommet de stack_b est maintenant le suivant
-    temp->next = stack_a->top;  // L'élément déplacé pointe maintenant vers le sommet de stack_a
-    stack_a->top = temp;  // Le sommet de stack_a devient l'élément déplacé
-
-    write(1, "pa\n", 3);  // Affiche l'instruction "pa"
+    t_stack_node *node = *src;
+    *src = node->next;
+    if (*src)
+        (*src)->prev = NULL;
+    node->next = *dst;
+    if (*dst)
+        (*dst)->prev = node;
+    node->prev = NULL;
+    *dst = node;
 }
 
-
-void	pb(t_stack *stack_a, t_stack *stack_b)
+void pa(t_stack_node **a, t_stack_node **b, bool print)
 {
-	if (!stack_a || !stack_a->top)
-		return ;
-	write(1, "pb\n", 3);
-	push(stack_a, stack_b);
-	count++;
-}	
+    push_stack(a, b);
+    if (!print)
+        printf("pa\n");
+}
+
+void pb(t_stack_node **b, t_stack_node **a, bool print)
+{
+    push_stack(b, a);
+    if (!print)
+        printf("pb\n");
+}
