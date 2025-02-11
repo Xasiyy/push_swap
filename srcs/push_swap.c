@@ -34,8 +34,8 @@ void set_target_a(t_stack_node *a, t_stack_node *b)
         t_stack_node *target = NULL;
         t_stack_node *currB = b;
         while (currB) {
-            if (currB->nbr < currA->nbr && currB->nbr > best_match) {
-                best_match = currB->nbr;
+            if (currB->value < currA->value && currB->value > best_match) {
+                best_match = currB->value;
                 target = currB;
             }
             currB = currB->next;
@@ -54,14 +54,14 @@ void cost_analysis_a(t_stack_node *a, t_stack_node *b) {
     t_stack_node *currA = a;
     while (currA) {
         if (currA->above_median)
-            currA->push_cost = currA->index;
+            currA->cost = currA->index;
         else
-            currA->push_cost = len_a - currA->index;
+            currA->cost = len_a - currA->index;
         if (currA->target_node) {
             if (currA->target_node->above_median)
-                currA->push_cost += currA->target_node->index;
+                currA->cost += currA->target_node->index;
             else
-                currA->push_cost += len_b - currA->target_node->index;
+                currA->cost += len_b - currA->target_node->index;
         }
         currA = currA->next;
     }
@@ -77,8 +77,8 @@ void set_cheapest(t_stack_node *stack) {
     t_stack_node *cheapest_node = NULL;
     curr = stack;
     while (curr) {
-        if (curr->push_cost < cheapest_value) {
-            cheapest_value = curr->push_cost;
+        if (curr->cost < cheapest_value) {
+            cheapest_value = curr->cost;
             cheapest_node = curr;
         }
         curr = curr->next;
@@ -109,8 +109,8 @@ void set_target_b(t_stack_node *a, t_stack_node *b)
         t_stack_node *target = NULL;
         t_stack_node *currA = a;
         while (currA) {
-            if (currA->nbr > currB->nbr && currA->nbr < best_match) {
-                best_match = currA->nbr;
+            if (currA->value > currB->value && currA->value < best_match) {
+                best_match = currA->value;
                 target = currA;
             }
             currA = currA->next;
@@ -157,8 +157,8 @@ void append_node(t_stack_node **stack, int n)
     t_stack_node *node = malloc(sizeof(t_stack_node));
     if (!node)
         return;
-    node->nbr = n;
-    node->push_cost = 0;
+    node->value = n;
+    node->cost = 0;
     node->index = 0;
     node->above_median = false;
     node->cheapest = false;
@@ -201,20 +201,16 @@ void prep_for_push(t_stack_node **stack, t_stack_node *target, char stack_name) 
 }
 
 void prepush(t_stack_node **a, t_stack_node **b, t_stack_node *node, char stack_name) {
-    // On suppose que update_all_stacks(a, b) a déjà été appelée.
     (void)stack_name;
-    // Tourner A jusqu'à ce que node soit en tête.
-    while ((*a)->nbr != node->nbr) {
+    while ((*a)->value != node->value) {
         if (node->above_median)
             ra(a, false);
         else
             rra(a, false);
-        // Mettre à jour A (B peut rester inchangé ici si on ne combine pas)
         current_index(*a);
     }
-    // Si B existe et que node a une cible, tourner B pour que la cible soit en tête.
     if (b && *b && node->target_node) {
-        while ((*b)->nbr != node->target_node->nbr) {
+        while ((*b)->value != node->target_node->value) {
             if (node->target_node->above_median)
                 rb(b, false);
             else

@@ -21,9 +21,9 @@
 #include <stdio.h>
 
 typedef struct s_stack_node {
-    int nbr;
+    int value;
     int index;
-    int push_cost;
+    int cost;
     bool above_median; 
     bool cheapest;
     struct s_stack_node *target_node; 
@@ -32,7 +32,7 @@ typedef struct s_stack_node {
 } t_stack_node;
 
 typedef struct s_stack {
-    t_stack_node *head;
+    t_stack_node *top;
 } t_stack;
 
 // Parsing et gestion des erreurs

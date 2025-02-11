@@ -48,7 +48,7 @@ bool error_duplicate(t_stack_node *stack, int value)
     t_stack_node *curr = stack;
     while (curr)
     {
-        if (curr->nbr == value)
+        if (curr->value == value)
             return true;
         curr = curr->next;
     }

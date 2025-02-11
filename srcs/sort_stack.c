@@ -17,7 +17,7 @@ t_stack *init_stack()
     t_stack *stack = malloc(sizeof(t_stack));
     if (!stack)
         return NULL;
-    stack->head = NULL;
+    stack->top = NULL;
     return stack;
 }
 

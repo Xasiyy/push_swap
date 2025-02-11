@@ -12,11 +12,11 @@
 
 #include "push_swap.h"
 
-static void swap_stack(t_stack_node **head)
+static void swap_stack(t_stack_node **top)
 {
-    if (!head || !*head || !((*head)->next))
+    if (!top || !*top || !((*top)->next))
         return;
-    t_stack_node *first = *head;
+    t_stack_node *first = *top;
     t_stack_node *second = first->next;
     first->next = second->next;
     if(second->next)
@@ -24,7 +24,7 @@ static void swap_stack(t_stack_node **head)
     second->prev = NULL;
     second->next = first;
     first->prev = second;
-    *head = second;
+    *top = second;
 }
 
 void sa(t_stack_node **a, bool print)

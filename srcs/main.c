@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     }
     t_stack_node *curr = a;
     while (curr) {
-        printf("%d ", curr->nbr);
+        printf("%d ", curr->value);
         curr = curr->next;
     }
     printf("\n");

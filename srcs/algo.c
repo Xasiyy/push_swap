@@ -24,7 +24,7 @@ t_stack_node *find_min(t_stack_node *stack)
     t_stack_node *curr = stack;
     t_stack_node *min_node = stack;
     while (curr) {
-        if (curr->nbr < min_node->nbr)
+        if (curr->value < min_node->value)
             min_node = curr;
         curr = curr->next;
     }
@@ -38,7 +38,7 @@ t_stack_node *find_max(t_stack_node *stack)
     t_stack_node *curr = stack;
     t_stack_node *max_node = stack;
     while (curr) {
-        if (curr->nbr > max_node->nbr)
+        if (curr->value > max_node->value)
             max_node = curr;
         curr = curr->next;
     }
@@ -49,7 +49,7 @@ bool stack_sorted(t_stack_node *stack)
 {
     t_stack_node *curr = stack;
     while (curr && curr->next) {
-        if (curr->nbr > curr->next->nbr)
+        if (curr->value > curr->next->value)
             return false;
         curr = curr->next;
     }
@@ -93,8 +93,8 @@ void push_back_to_a(t_stack_node **a, t_stack_node **b) {
         t_stack_node *curr = *b;
         int min_cost = INT_MAX;
         while (curr) {
-            if (curr->push_cost < min_cost) {
-                min_cost = curr->push_cost;
+            if (curr->cost < min_cost) {
+                min_cost = curr->cost;
                 cheapest_node = curr;
             }
             curr = curr->next;
@@ -102,7 +102,7 @@ void push_back_to_a(t_stack_node **a, t_stack_node **b) {
         if (!cheapest_node)
             return;
         if (cheapest_node->target_node) {
-            while ((*a)->nbr != cheapest_node->target_node->nbr) {
+            while ((*a)->value != cheapest_node->target_node->value) {
                 if (cheapest_node->target_node->index <= stack_len(*a) / 2)
                     ra(a, false);
                 else
@@ -158,9 +158,9 @@ void sort_three(t_stack_node **a)
 {
     if (stack_len(*a) != 3)
         return;
-    int first = (*a)->nbr;
-    int second = (*a)->next->nbr;
-    int third = (*a)->next->next->nbr;
+    int first = (*a)->value;
+    int second = (*a)->next->value;
+    int third = (*a)->next->next->value;
     if (first < second && second < third)
         return;
     else if (first > second && second < third && first < third)
