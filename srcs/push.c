@@ -12,31 +12,33 @@
 
 #include "push_swap.h"
 
-static void push_stack(t_stack_node **dst, t_stack_node **src)
+static void	push_stack(t_stack_node **dst, t_stack_node **src)
 {
-    if (!src || !*src)
-        return;
-    t_stack_node *node = *src;
-    *src = node->next;
-    if (*src)
-        (*src)->prev = NULL;
-    node->next = *dst;
-    if (*dst)
-        (*dst)->prev = node;
-    node->prev = NULL;
-    *dst = node;
+	t_stack_node	*node;
+
+	if (!src || !*src)
+		return ;
+	node = *src;
+	*src = node->next;
+	if (*src)
+		(*src)->prev = NULL;
+	node->next = *dst;
+	if (*dst)
+		(*dst)->prev = node;
+	node->prev = NULL;
+	*dst = node;
 }
 
-void pa(t_stack_node **a, t_stack_node **b, bool print)
+void	pa(t_stack_node **a, t_stack_node **b, bool print)
 {
-    push_stack(a, b);
-    if (!print)
-        printf("pa\n");
+	push_stack(a, b);
+	if (!print)
+		printf("pa\n");
 }
 
-void pb(t_stack_node **b, t_stack_node **a, bool print)
+void	pb(t_stack_node **b, t_stack_node **a, bool print)
 {
-    push_stack(b, a);
-    if (!print)
-        printf("pb\n");
+	push_stack(b, a);
+	if (!print)
+		printf("pb\n");
 }

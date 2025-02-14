@@ -4,13 +4,11 @@ SRCS =	srcs/push_swap.c \
 		srcs/main.c \
 		srcs/swap.c \
 		srcs/sort_stack.c \
-		srcs/print_stack.c \
 		srcs/parsing.c \
 		srcs/push.c \
 		srcs/reverse.c \
 		srcs/rotate.c \
 		srcs/algo.c \
-		srcs/turkish_sort.c \
 
 INCLUDES = -I include
 LIBFT_DIR = libs/Libft

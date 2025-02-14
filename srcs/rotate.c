@@ -12,36 +12,40 @@
 
 #include "push_swap.h"
 
-static void rotate(t_stack_node **stack) {
-    if (!stack || !*stack || !((*stack)->next))
-        return;
-    t_stack_node *first = *stack;
-    *stack = first->next;
-    (*stack)->prev = NULL;
-    t_stack_node *last = find_last(*stack);
-    last->next = first;
-    first->prev = last;
-    first->next = NULL;
+static void	rotate(t_stack_node **stack)
+{
+	t_stack_node	*first;
+	t_stack_node	*last;
+
+	if (!stack || !*stack || !((*stack)->next))
+		return ;
+	first = *stack;
+	*stack = first->next;
+	(*stack)->prev = NULL;
+	last = find_last(*stack);
+	last->next = first;
+	first->prev = last;
+	first->next = NULL;
 }
 
-void ra(t_stack_node **a, bool print)
+void	ra(t_stack_node **a, bool print)
 {
-    rotate(a);
-    if (!print)
-        printf("ra\n");
+	rotate(a);
+	if (!print)
+		printf("ra\n");
 }
 
-void rb(t_stack_node **b, bool print)
+void	rb(t_stack_node **b, bool print)
 {
-    rotate(b);
-    if (!print)
-        printf("rb\n");
+	rotate(b);
+	if (!print)
+		printf("rb\n");
 }
 
-void rr(t_stack_node **a, t_stack_node **b, bool print)
+void	rr(t_stack_node **a, t_stack_node **b, bool print)
 {
-    ra(a, true);
-    rb(b, true);
-    if (!print)
-        printf("rr\n");
+	ra(a, true);
+	rb(b, true);
+	if (!print)
+		printf("rr\n");
 }

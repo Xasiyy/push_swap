@@ -190,7 +190,7 @@ void init_stack_a(t_stack_node **a, char **argv) {
     }
 }
 
-void prep_for_push(t_stack_node **stack, t_stack_node *target, char stack_name) {
+void prep_push(t_stack_node **stack, t_stack_node *target, char stack_name) {
     while (*stack != target) {
         if (stack_name == 'a')
             ra(stack, false);
@@ -200,7 +200,7 @@ void prep_for_push(t_stack_node **stack, t_stack_node *target, char stack_name) 
     }
 }
 
-void prepush(t_stack_node **a, t_stack_node **b, t_stack_node *node, char stack_name) {
+void prep(t_stack_node **a, t_stack_node **b, t_stack_node *node, char stack_name) {
     (void)stack_name;
     while ((*a)->value != node->value) {
         if (node->above_median)
@@ -220,10 +220,6 @@ void prepush(t_stack_node **a, t_stack_node **b, t_stack_node *node, char stack_
     }
     update_all_stacks(a, b);
 }
-
-
-
-
 
 void update_all_stacks(t_stack_node **a, t_stack_node **b) {
     init_nodes_a(a, b);

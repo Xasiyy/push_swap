@@ -12,11 +12,11 @@
 
 #include "push_swap.h"
 
-int parsing(int argc, char **argv)
+int	parsing(int argc, char **argv)
 {
-	int i;
-	int j;
-	int tmp;
+	int	i;
+	int	j;
+	int	tmp;
 
 	if (argc < 2)
 		return (-1);
@@ -36,37 +36,39 @@ int parsing(int argc, char **argv)
 	return (0);
 }
 
-void free_errors(t_stack_node **stack)
+void	free_errors(t_stack_node **stack)
 {
-    free_stack(stack);
-    write(2, "Error\n", 6);
-    exit(EXIT_FAILURE);
+	free_stack(stack);
+	write(2, "Error\n", 6);
+	exit(EXIT_FAILURE);
 }
 
-bool error_duplicate(t_stack_node *stack, int value)
+bool	error_duplicate(t_stack_node *stack, int value)
 {
-    t_stack_node *curr = stack;
-    while (curr)
-    {
-        if (curr->value == value)
-            return true;
-        curr = curr->next;
-    }
-    return false;
+	t_stack_node	*curr;
+
+	curr = stack;
+	while (curr)
+	{
+		if (curr->value == value)
+			return (true);
+		curr = curr->next;
+	}
+	return (false);
 }
 
-
-bool error_syntax(const char *str)
+bool	error_syntax(const char *str)
 {
-    int i = 0;
+	int	i;
 
-    if (str[i] == '-' || str[i] == '+')
-        i++;
-    while (str[i])
-    {
-        if (!is_digit(str[i]))
-            return true;
-        i++;
-    }
-    return false;
+	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (!is_digit(str[i]))
+			return (true);
+		i++;
+	}
+	return (false);
 }

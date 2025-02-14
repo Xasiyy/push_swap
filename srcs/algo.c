@@ -76,7 +76,7 @@ void push_to_b(t_stack_node **a, t_stack_node **b)
         if (!cheapest_node)
             return;
         
-        prepush(a, b, cheapest_node, 'a');
+        prep(a, b, cheapest_node, 'a');
         
         pb(b, a, false);
         
