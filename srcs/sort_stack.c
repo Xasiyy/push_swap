@@ -52,3 +52,19 @@ int	stack_len(t_stack_node *stack)
 	}
 	return (count);
 }
+
+int is_digit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+bool stack_sorted(t_stack_node *stack)
+{
+    t_stack_node *curr = stack;
+    while (curr && curr->next) {
+        if (curr->value > curr->next->value)
+            return false;
+        curr = curr->next;
+    }
+    return true;
+}
