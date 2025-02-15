@@ -72,3 +72,8 @@ bool	error_syntax(const char *str)
 	}
 	return (false);
 }
+
+int	is_digit(int c)
+{
+	return (c >= '0' && c <= '9');
+}

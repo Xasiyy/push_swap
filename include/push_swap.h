@@ -89,7 +89,8 @@ void			set_cheapest(t_stack_node *stack);
 void			init_nodes_a(t_stack_node **a, t_stack_node **b);
 void			set_target_b(t_stack_node *a, t_stack_node *b);
 void			init_nodes_b(t_stack_node **a, t_stack_node **b);
-void			prep(t_stack_node **a, t_stack_node **b, t_stack_node *n, char name);
+void			prep(t_stack_node **a, t_stack_node **b, t_stack_node *n,
+					char name);
 void			update_all_stacks(t_stack_node **a, t_stack_node **b);
 void			prep_push(t_stack_node **stack, t_stack_node *tar, char name);
 

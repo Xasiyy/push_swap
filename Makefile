@@ -13,6 +13,8 @@ SRCS =	srcs/push_swap.c \
 		srcs/ft_atol.c \
 		srcs/utils.c \
 		srcs/sort_three.c \
+		srcs/set_target.c \
+		srcs/push_back.c \
 
 INCLUDES = -I include
 LIBFT_DIR = libs/Libft
