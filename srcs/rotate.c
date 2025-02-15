@@ -32,14 +32,14 @@ void	ra(t_stack_node **a, bool print)
 {
 	rotate(a);
 	if (!print)
-		printf("ra\n");
+		write(1, "ra\n", 3);
 }
 
 void	rb(t_stack_node **b, bool print)
 {
 	rotate(b);
 	if (!print)
-		printf("rb\n");
+		write(1, "rb\n", 3);
 }
 
 void	rr(t_stack_node **a, t_stack_node **b, bool print)
@@ -47,5 +47,5 @@ void	rr(t_stack_node **a, t_stack_node **b, bool print)
 	ra(a, true);
 	rb(b, true);
 	if (!print)
-		printf("rr\n");
+		write(1, "rr\n", 3);
 }
