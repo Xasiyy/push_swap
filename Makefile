@@ -17,7 +17,7 @@ SRCS =	srcs/push_swap.c \
 		srcs/push_back.c \
 
 INCLUDES = -I include
-LIBFT_DIR = libs/Libft
+LIBFT_DIR = libft
 LIBFT_NAME = libft.a
 LIBFT = $(LIBFT_DIR)/$(LIBFT_NAME)
 
